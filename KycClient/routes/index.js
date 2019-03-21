@@ -19,8 +19,6 @@ router.get("/userform", function(req, res, next) {
 });
 router.post("/userData", (req, res,next) => {
   const privateKey = req.body.privateKey;
-  console.log(privateKey);
-  
   const name = req.body.name;
   const email = req.body.email;
   const dob = req.body.dob;
@@ -28,18 +26,17 @@ router.post("/userData", (req, res,next) => {
   const mobile = req.body.mobile;
   const aadhar = req.body.aadhar;
   console.log("Data sent to REST API");
-  // const userData = new KycClient();
-  // userData.addKyc(
-  //   "Manufacturer",
-  //   privateKey,
-  //   name,
-  //   email,
-  //   dob,
-  //   address,
-  //   mobile,
-  //   aadhar
-  // );
-  
+  const userData = new KycClient();
+  userData.addKyc(
+    "Manufacturer",
+    privateKey,
+    name,
+    email,
+    dob,
+    address,
+    mobile,
+    aadhar
+  );
 });
 
 

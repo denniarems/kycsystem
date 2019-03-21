@@ -1,12 +1,14 @@
 
   loginUser = event => {
     event.preventDefault();
-    privateKey = document.getElementById("priv_key").value;
+    sessionStorage.clear();
+    const privateKey = document.getElementById("priv_key").value;
+    sessionStorage.setItem("privatekey", privateKey);
     if (!privateKey) {
       alert("Input is empty");
     } else {
-      sessionStorage.clear();
-      sessionStorage.setItem("privatekey", privateKey);
+      
+      sessionStorage.setItem("pub_key", privateKey);
       window.location.href = "/userform";
     }
   };
@@ -18,7 +20,8 @@
     const address = document.getElementById("adderss").value;
     const mobile = document.getElementById("mobile").value;
     const aadhar = document.getElementById("aadhar").value;
-    console.log("key",privateKey);
+    const privateKey = sessionStorage.getItem("pub_key");
+    sessionStorage.clear();
     $.post('/userData',{
       privateKey: privateKey,
       name:name,
@@ -32,7 +35,7 @@
 
 
 document.getElementById("publicKeyOnUserForm").value = sessionStorage.getItem(
-  "privatekey"
+  "pub_key"
 );
 
 
