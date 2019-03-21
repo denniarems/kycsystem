@@ -18,11 +18,11 @@ router.get('/', function(req, res, next) {
 router.get('/user', function(req, res, next) {
   res.render('user',{name:'User'});
 });
+router.get('/userform', function(req, res, next) {
+  res.render('userform');
+});
 
-router.route('/user').post((req,res)=>{
-  let key = req.body.key;
-  res.render('userform',{key})
-})
+
 
 
 /* GET client page. */
