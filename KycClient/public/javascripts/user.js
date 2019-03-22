@@ -19,6 +19,7 @@
     const dob = document.getElementById("dob").value;
     const address = document.getElementById("adderss").value;
     const mobile = document.getElementById("mobile").value;
+    const pincode = document.getElementById("pincode").value;
     const aadhar = document.getElementById("aadhar").value;
     const privateKey = sessionStorage.getItem("pub_key");
     sessionStorage.clear();
@@ -29,6 +30,7 @@
       dob:dob,
       address:address,
       mobile:mobile,
+      pincode:pincode,
       aadhar:aadhar
     } ,'json');
   };

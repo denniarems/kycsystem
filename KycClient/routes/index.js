@@ -24,6 +24,7 @@ router.post("/userData", (req, res,next) => {
   const dob = req.body.dob;
   const address = req.body.address;
   const mobile = req.body.mobile;
+  const pincode = req.body.pincode;
   const aadhar = req.body.aadhar;
   console.log("Data sent to REST API");
   const userData = new KycClient();
@@ -35,6 +36,7 @@ router.post("/userData", (req, res,next) => {
     dob,
     address,
     mobile,
+    pincode,
     aadhar
   );
 });
