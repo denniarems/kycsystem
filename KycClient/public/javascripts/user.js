@@ -7,11 +7,11 @@
     if (!privateKey) {
       alert("Input is empty");
     } else {
-      
       sessionStorage.setItem("pub_key", privateKey);
       window.location.href = "/userform";
     }
   };
+  
   userData = event => {
     event.preventDefault();
     const name = document.getElementById("name").value;

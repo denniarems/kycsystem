@@ -1,0 +1,20 @@
+{
+  "name": "kycprocessor",
+  "version": "1.0.0",
+  "description": "Kycprocessor",
+  "main": "transactionProcessor.js",
+  "scripts": {
+    "start": "node transactionProcessor.js"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "protobufjs": "^6.7.3",
+    "sawtooth-sdk": "^1.0.2",
+    "secp256k1": "^3.2.5",
+    "text-encoding": "^0.6.4",
+    "uuid": "^3.0.1",
+    "zeromq": "^4.2.1"
+  },
+  "author": "dennis",
+  "license": "ISC"
+}
