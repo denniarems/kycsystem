@@ -9,21 +9,31 @@ const NAMESPACE = hash(FAMILY_NAME).substring(0, 6)
 const URL = 'tcp://validator:4004'
 var decoder = new TextDecoder('utf8')
 
-addUserData = (context, name, email, dob, address, mobile, pincode, aadhar) => {
-	let user_Address = tpFun.getUserAddress(pincode)
+addUserData = (
+	context,
+	userPublicKey,
+	name,
+	email,
+	dob,
+	address,
+	mobile,
+	pincode,
+	aadhar,
+) => {
+	let user_Address = tpFun.getUserAddress(pincode, userPublicKey)
 	let user_detail = [name, email, dob, address, mobile, pincode, aadhar]
-	return tpFun.writeToStore(context, user_Address, user_detail)
+	return tpFun.writeToState(context, user_Address, user_detail)
 }
 verifyUser = (context, action, userPublicKey, pincode) => {
 	let address = tpFun.getUserAddress(pincode, userPublicKey)
 	return context.getState([address]).then(function(data) {
 		console.log('data', data)
 		if (action == 0) {
-			return tpFun.deleteFromStore(context, address)
+			return tpFun.deleteFromState(context, address)
 		} else {
 			let stateJSON = decoder.decode(data[address])
 			let newData = stateJSON + ',' + [action].join(',')
-			return tpFun.writeToStore(context, address, newData)
+			return tpFun.writeToState(context, address, newData)
 		}
 	})
 }
@@ -48,7 +58,6 @@ class KnowYourCustomer extends TransactionHandler {
 				Payload[4],
 				Payload[5],
 				Payload[6],
-				Payload[7],
 			)
 		} else {
 			return verifyUser(context, Payload[0], Payload[1], Payload[2])

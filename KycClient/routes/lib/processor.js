@@ -5,7 +5,7 @@ const { Secp256k1PrivateKey } = require('sawtooth-sdk/signing/secp256k1')
 const { TextEncoder } = require('text-encoding/lib/encoding')
 const { hash } = require('./transaction')
 FAMILY_VERSION = '1.0'
-var encoder = new TextEncoder('utf8')
+const encoder = new TextEncoder('utf8')
 async function sendTransaction(batchListBytes) {
 	let resp = await fetch('http://rest-api:8008/batches', {
 		method: 'POST',

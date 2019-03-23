@@ -1,5 +1,5 @@
 /*
-module to deal with writing data to store , address generation ,hashing etc
+module to deal with writing data to State , address generation ,hashing etc
 */
 
 const crypto = require('crypto')
@@ -27,14 +27,14 @@ class tpFun {
     address - address to which data should be written to
     data - the data tto be written
     */
-	writeToStore = (context, address, data) => {
+	writeToState = (context, address, data) => {
 		this.dataBytes = encoder.encode(data)
 		let entries = {
 			[address]: dataBytes,
 		}
 		return context.setState(entries)
 	}
-	deleteFromStore = (context, address) => {
+	deleteFromState = (context, address) => {
 		return context.deleteState([address])
 	}
 
