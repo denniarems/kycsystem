@@ -1,31 +1,61 @@
 /* Transaction Processor */
-const {TextDecoder} = require('text-encoding/lib/encoding')
+const { TextDecoder } = require('text-encoding/lib/encoding')
 const { TransactionHandler } = require('sawtooth-sdk/processor/handler')
-const {*} = require('./lib/transaction')
-const { TransactionProcessor } = require('sawtooth-sdk/processor');
+const { TransactionProcessor } = require('sawtooth-sdk/processor')
+import tpFun from './lib/transaction'
 
-
-
-const FAMILY_NAME = "Kyc Chain"
-const NAMESPACE = hash(FAMILY_NAME).substring(0, 6);
-const URL = 'tcp://validator:4004';
+const FAMILY_NAME = 'Kyc Chain'
+const NAMESPACE = hash(FAMILY_NAME).substring(0, 6)
+const URL = 'tcp://validator:4004'
 var decoder = new TextDecoder('utf8')
 
-
-function addUserData (context, name , email , dob , address , mobile,pincode, aadhar ) {
-    let user_Address = getUserAddress(pincode)
-    let user_detail =[name , email , dob , address , mobile,pincode, aadhar]
-    return writeToStore(context,user_Address,user_detail)
+addUserData = (context, name, email, dob, address, mobile, pincode, aadhar) => {
+	let user_Address = tpFun.getUserAddress(pincode)
+	let user_detail = [name, email, dob, address, mobile, pincode, aadhar]
+	return tpFun.writeToStore(context, user_Address, user_detail)
 }
-function verifyUser(context,action,aadhar,pincode){
-    let address = getUserAddress(aadhar,pincode)
-    return context.getState([address]).then(function(data){
-    console.log("data",data)
-    if(action == 0 ){
-        return deleteFromStore(context,address)
-    }else{
-    let stateJSON = decoder.decode(data[address])
-    let newData = stateJSON + "," + [action].join(',')
-    return writeToStore(context,address,newData)
-    
-    })
+verifyUser = (context, action, userPublicKey, pincode) => {
+	let address = tpFun.getUserAddress(pincode, userPublicKey)
+	return context.getState([address]).then(function(data) {
+		console.log('data', data)
+		if (action == 0) {
+			return tpFun.deleteFromStore(context, address)
+		} else {
+			let stateJSON = decoder.decode(data[address])
+			let newData = stateJSON + ',' + [action].join(',')
+			return tpFun.writeToStore(context, address, newData)
+		}
+	})
+}
+
+//transaction handler class
+
+class KnowYourCustomer extends TransactionHandler {
+	constructor() {
+		super(FAMILY_NAME, ['1.0'], [NAMESPACE])
+	}
+	//apply function
+	apply = (transactionProcessRequest, context) => {
+		let PayloadBytes = decoder.decode(transactionProcessRequest.payload)
+		let Payload = PayloadBytes.toString().split(',')
+		let action = Payload[0]
+		if (!action) {
+			return addUserData(
+				context,
+				Payload[1],
+				Payload[2],
+				Payload[3],
+				Payload[4],
+				Payload[5],
+				Payload[6],
+				Payload[7],
+			)
+		} else {
+			return verifyUser(context, Payload[0], Payload[1], Payload[2])
+		}
+	}
+}
+
+const transactionProcessor = new TransactionProcessor(URL)
+transactionProcessor.addHandler(new KnowYourCustomer())
+transactionProcessor.start()
