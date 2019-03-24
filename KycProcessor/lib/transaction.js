@@ -14,7 +14,7 @@ USERKEY = '8f99bb8b1dc799fd1ed9b7e370330f9378c78f7c332ac3e2233bf559ce21ea8b'
 NAMESPACE = 'Kyc Chain'
 class tpFun {
 	// function to hash data
-	hash = data => {
+	hash(data) {
 		return crypto
 			.createHash('sha512')
 			.update(data)
@@ -27,25 +27,25 @@ class tpFun {
     address - address to which data should be written to
     data - the data tto be written
     */
-	writeToState = (context, address, data) => {
+	writeToState(context, address, data) {
 		this.dataBytes = encoder.encode(data)
 		let entries = {
 			[address]: dataBytes,
 		}
 		return context.setState(entries)
 	}
-	deleteFromState = (context, address) => {
+	deleteFromState(context, address) {
 		return context.deleteState([address])
 	}
 
 	/* function to retrive the address of a particular vehicle based on its vin number */
-	getUserAddress = (pincode, pKey) => {
+	getUserAddress(pincode, pKey) {
 		let keyHash = hash(pKey)
 		let nameHash = hash(NAMESPACE)
 		let pinHash = hash(pincode)
 		return nameHash.slice(0, 6) + pinHash.slice(0, 6) + keyHash.slice(0, 58)
 	}
-	getUserPublicKey = Key => {
+	getUserPublicKey(Key) {
 		const context = createContext('secp256k1')
 		let key = Secp256k1PrivateKey.fromHex(Key)
 		let signer = new CryptoFactory(context).newSigner(key)

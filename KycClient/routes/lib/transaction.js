@@ -1,7 +1,7 @@
 /*
 module to deal with writing data to store , address generation ,hashing etc
 */
-
+const { TextEncoder } = require('text-encoding/lib/encoding')
 const crypto = require('crypto')
 const { Secp256k1PrivateKey } = require('sawtooth-sdk/signing/secp256k1')
 const { createContext, CryptoFactory } = require('sawtooth-sdk/signing')

@@ -2,13 +2,13 @@
 const { TextDecoder } = require('text-encoding/lib/encoding')
 const { TransactionHandler } = require('sawtooth-sdk/processor/handler')
 const { TransactionProcessor } = require('sawtooth-sdk/processor')
-import tpFun from './lib/transaction'
+const tpFun = require('./lib/transaction')
 
 const FAMILY_NAME = 'Kyc Chain'
-const NAMESPACE = hash(FAMILY_NAME).substring(0, 6)
+const tp = new tpFun()
+const NAMESPACE = tp.hash(FAMILY_NAME).substring(0, 6)
 const URL = 'tcp://validator:4004'
 var decoder = new TextDecoder('utf8')
-
 addUserData = (
 	context,
 	userPublicKey,
@@ -20,20 +20,20 @@ addUserData = (
 	pincode,
 	aadhar,
 ) => {
-	let user_Address = tpFun.getUserAddress(pincode, userPublicKey)
+	let user_Address = tp.getUserAddress(pincode, userPublicKey)
 	let user_detail = [name, email, dob, address, mobile, pincode, aadhar]
-	return tpFun.writeToState(context, user_Address, user_detail)
+	return tp.writeToState(context, user_Address, user_detail)
 }
 verifyUser = (context, action, userPublicKey, pincode) => {
-	let address = tpFun.getUserAddress(pincode, userPublicKey)
+	let address = tp.getUserAddress(pincode, userPublicKey)
 	return context.getState([address]).then(function(data) {
 		console.log('data', data)
 		if (action == 0) {
-			return tpFun.deleteFromState(context, address)
+			return tp.deleteFromState(context, address)
 		} else {
 			let stateJSON = decoder.decode(data[address])
 			let newData = stateJSON + ',' + [action].join(',')
-			return tpFun.writeToState(context, address, newData)
+			return tp.writeToState(context, address, newData)
 		}
 	})
 }
@@ -45,7 +45,7 @@ class KnowYourCustomer extends TransactionHandler {
 		super(FAMILY_NAME, ['1.0'], [NAMESPACE])
 	}
 	//apply function
-	apply = (transactionProcessRequest, context) => {
+	apply(transactionProcessRequest, context) {
 		let PayloadBytes = decoder.decode(transactionProcessRequest.payload)
 		let Payload = PayloadBytes.toString().split(',')
 		let action = Payload[0]

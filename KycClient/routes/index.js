@@ -39,6 +39,9 @@ router.get('/client', (req, res, next) => {
 router.get('/police', (req, res, next) => {
 	res.render('police', { name: 'Police' })
 })
+router.get('/policeUi', (req, res, next) => {
+	res.render('policeUi')
+})
 
 router.post('/getKey', (req, res, next) => {
 	key = req.body.privateKey

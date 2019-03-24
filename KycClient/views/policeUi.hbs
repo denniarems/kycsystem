@@ -1,0 +1,53 @@
+{{> inav }}
+<div class="container">
+<table class="table table-hover table-inverse table-responsive ">
+    <thead class="thead-inverse">
+        <tr>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Details</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {{#listings}}
+            <tr>
+                <td scope="row"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {{/listings}}
+
+        </tbody>
+</table>
+</div>
+{{> footer }}
+    <table id="vehicleDetails">
+        <tr>
+            <th>Vin Number</th>
+            <th>Engine Number</th>
+            <th>Model</th>
+            <th>Date of Manufacture</th>
+            <th>Status</th>
+            <th>Owner</th>
+            <th>Address</th>
+            <th>Date of Registration</th>
+            <th>Number Plate</th>
+        </tr>
+        {{#listings}}
+        <tr class="">
+            <td>{{vinNum}}</td>
+            <td>{{engineNo}}</td>
+            <td>{{model}}</td>
+            <td>{{dom}}</td>
+            <td>{{status}}</td>
+            <td>{{owner}}</td>
+            <td>{{address}}</td>
+            <td>{{dor}}</td>
+            <td>{{numberPlate}}</td>
+        </tr>
+        {{/listings}}
+    </table>
