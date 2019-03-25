@@ -22,6 +22,8 @@ createTransaction = (
 	payload,
 	familyVersion = FAMILY_VERSION,
 ) => {
+	console.log('inside ct')
+
 	const context = createContext('secp256k1')
 	const secp256k1pk = Secp256k1PrivateKey.fromHex(Privkey.trim())
 	signer = new CryptoFactory(context).newSigner(secp256k1pk)
@@ -54,7 +56,7 @@ createTransaction = (
 	const batch = protobuf.Batch.create({
 		header: batchHeaderBytes,
 		headerSignature: signer.sign(batchHeaderBytes),
-		transactions: transactions,
+		transactions: [transaction],
 	})
 	//create batchlist
 	const batchListBytes = protobuf.BatchList.encode({

@@ -17,25 +17,6 @@ hash = data => {
 		.update(data)
 		.digest('hex')
 }
-
-/* function to write data to state 
-    parameter : 
-    context -  validator context object
-    address - address to which data should be written to
-    data - the data tto be written
-    */
-writeToStore = (context, address, data) => {
-	this.dataBytes = encoder.encode(data)
-	let entries = {
-		[address]: dataBytes,
-	}
-	return context.setState(entries)
-}
-deleteFromStore = (context, address) => {
-	return context.deleteState([address])
-}
-
-/* function to retrive the address of a particular vehicle based on its vin number */
 getUserAddress = (pincode, pKey) => {
 	let keyHash = hash(pKey)
 	let nameHash = hash(NAMESPACE)
@@ -48,11 +29,23 @@ getUserPublicKey = Key => {
 	let signer = new CryptoFactory(context).newSigner(key)
 	return signer.getPublicKey().asHex()
 }
-
+async function getState(address, isQuery) {
+	let stateRequest = 'http://rest-api:8008/state'
+	if (address) {
+		if (isQuery) {
+			stateRequest += '?address='
+		} else {
+			stateRequest += '/address/'
+		}
+		stateRequest += address
+	}
+	let stateResponse = await fetch(stateRequest)
+	let stateJSON = await stateResponse.json()
+	return stateJSON
+}
 module.exports = {
 	getUserPublicKey,
 	getUserAddress,
-	deleteFromStore,
-	writeToStore,
 	hash,
+	getState,
 }

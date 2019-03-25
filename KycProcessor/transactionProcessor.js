@@ -28,7 +28,7 @@ verifyUser = (context, action, userPublicKey, pincode) => {
 	let address = tp.getUserAddress(pincode, userPublicKey)
 	return context.getState([address]).then(function(data) {
 		console.log('data', data)
-		if (action == 0) {
+		if (action === null) {
 			return tp.deleteFromState(context, address)
 		} else {
 			let stateJSON = decoder.decode(data[address])
@@ -47,20 +47,23 @@ class KnowYourCustomer extends TransactionHandler {
 	//apply function
 	apply(transactionProcessRequest, context) {
 		let PayloadBytes = decoder.decode(transactionProcessRequest.payload)
+		let userPublicKey = transactionProcessRequest.header.signerPublicKey
 		let Payload = PayloadBytes.toString().split(',')
-		let action = Payload[0]
-		if (!action) {
+		let action = parseInt(Payload[0])
+		if (action === -1) {
 			return addUserData(
 				context,
+				userPublicKey,
 				Payload[1],
 				Payload[2],
 				Payload[3],
 				Payload[4],
 				Payload[5],
 				Payload[6],
+				Payload[7],
 			)
 		} else {
-			return verifyUser(context, Payload[0], Payload[1], Payload[2])
+			return verifyUser(context, action, userPublicKey, Payload[6])
 		}
 	}
 }

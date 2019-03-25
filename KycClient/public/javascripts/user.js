@@ -36,7 +36,7 @@ userData = event => {
 			name: name,
 			email: email,
 			dob: dob,
-			address: address,
+			location: address,
 			mobile: mobile,
 			pincode: pincode,
 			aadhar: aadhar,
@@ -48,3 +48,10 @@ userData = event => {
 document.getElementById('publicKeyOnUserForm').value = sessionStorage.getItem(
 	'pub_key',
 )
+document.getElementById('name').value = 'Dennis'
+document.getElementById('email').value = 'hehe@hihi.in'
+document.getElementById('dob').value
+document.getElementById('adderss').value = 'it doesnt matter'
+document.getElementById('mobile').value = 2255
+document.getElementById('pincode').value = 00000
+document.getElementById('aadhar').value = 12345678

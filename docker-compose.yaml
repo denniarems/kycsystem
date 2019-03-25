@@ -7,9 +7,9 @@ services:
       context: .
       dockerfile: ./KycClient/Dockerfile
     expose:
-      - 3000
+      - 3001
     ports:
-      - 3000:3000
+      - 3001:3000
     volumes:
       - ".:/project/KYC"
 

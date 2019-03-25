@@ -30,7 +30,7 @@ class tpFun {
 	writeToState(context, address, data) {
 		this.dataBytes = encoder.encode(data)
 		let entries = {
-			[address]: dataBytes,
+			[address]: this.dataBytes,
 		}
 		return context.setState(entries)
 	}
@@ -40,9 +40,11 @@ class tpFun {
 
 	/* function to retrive the address of a particular vehicle based on its vin number */
 	getUserAddress(pincode, pKey) {
-		let keyHash = hash(pKey)
-		let nameHash = hash(NAMESPACE)
-		let pinHash = hash(pincode)
+		console.log('pincode is ', pincode)
+
+		let keyHash = this.hash(pKey)
+		let nameHash = this.hash(NAMESPACE)
+		let pinHash = this.hash(pincode)
 		return nameHash.slice(0, 6) + pinHash.slice(0, 6) + keyHash.slice(0, 58)
 	}
 	getUserPublicKey(Key) {
