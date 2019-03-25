@@ -1,6 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { addUserData, verifyUser } = require('./kycClient')
+const {
+	addUserData,
+	verifyUser,
+	checkPoliceKey,
+	getUserData,
+} = require('./kycClient')
 const { getUserPublicKey } = require('./lib/transaction')
 
 /* GET home page. */
@@ -42,11 +47,8 @@ router.get('/client', (req, res, next) => {
 router.get('/police', (req, res, next) => {
 	res.render('police', { name: 'Police' })
 })
-router.get('/policeUi', (req, res, next) => {
-	res.render('policeUi')
-})
-router.get('/listUserData', async (req, res) => {
-	let stateData = await addUserData()
+router.get('/policeUi', async (req, res) => {
+	let stateData = await getUserData()
 	//console.log("listings", stateData);
 	let usersList = []
 	stateData.data.forEach(users => {
@@ -54,7 +56,7 @@ router.get('/listUserData', async (req, res) => {
 		let decodedData = Buffer.from(users.data, 'base64').toString()
 		let data = decodedData.split(',')
 		console.log(decodedData)
-		console.log(Data)
+		console.log(data)
 
 		usersList.push({
 			name: data[1],
@@ -64,13 +66,18 @@ router.get('/listUserData', async (req, res) => {
 			location: data[6],
 			address: data[9],
 			mobile: data[5],
+			pincode: data[6],
 			aadhar: data[7],
 		})
 	})
 
 	res.render('policeUi', { listings: usersList })
 })
-
+router.post('/checkPoliceKey', (req, res) => {
+	key = req.body.privateKey
+	status = checkPoliceKey(key)
+	res.send({ status: status })
+})
 router.post('/getKey', (req, res, next) => {
 	key = req.body.privateKey
 	console.log('key', key)

@@ -5,7 +5,7 @@ const { TextEncoder } = require('text-encoding/lib/encoding')
 const crypto = require('crypto')
 const { Secp256k1PrivateKey } = require('sawtooth-sdk/signing/secp256k1')
 const { createContext, CryptoFactory } = require('sawtooth-sdk/signing')
-
+const fetch = require('node-fetch')
 var encoder = new TextEncoder('utf8')
 
 NAMESPACE = 'Kyc Chain'

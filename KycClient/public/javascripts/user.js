@@ -53,5 +53,5 @@ document.getElementById('email').value = 'hehe@hihi.in'
 document.getElementById('dob').value
 document.getElementById('adderss').value = 'it doesnt matter'
 document.getElementById('mobile').value = 2255
-document.getElementById('pincode').value = 00000
+document.getElementById('pincode').value = 300303003
 document.getElementById('aadhar').value = 12345678
