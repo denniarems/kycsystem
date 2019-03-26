@@ -43,6 +43,7 @@ async function getState(address, isQuery) {
 	let stateJSON = await stateResponse.json()
 	return stateJSON
 }
+
 module.exports = {
 	getUserPublicKey,
 	getUserAddress,

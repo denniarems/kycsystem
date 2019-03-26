@@ -13,11 +13,16 @@
         <tbody>
             {{#listings}}
             <tr>
-                <td scope="row"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td scope="row">{{name}}</td>
+                <td>{{mobile}}</td>
+                <td>{{address}}</td>
+                <td>
+                    <button class="btn-dark" data-toggle="modal" data-target="#moreData" onclick="modelOpen(event,{{@index}})">More</button>
+                </td>
+                <td>
+                    <button class="btn-success" onclick="putStatus(event,'{{@index}}',1)" >Accept</button>
+                    <button class="btn-danger"onclick="putStatus(event,'{{@index}}',0)" >Reject</button>
+                </td>
             </tr>
             {{/listings}}
 
@@ -25,29 +30,4 @@
 </table>
 </div>
 {{> footer }}
-    <table id="vehicleDetails">
-        <tr>
-            <th>Vin Number</th>
-            <th>Engine Number</th>
-            <th>Model</th>
-            <th>Date of Manufacture</th>
-            <th>Status</th>
-            <th>Owner</th>
-            <th>Address</th>
-            <th>Date of Registration</th>
-            <th>Number Plate</th>
-        </tr>
-        {{#listings}}
-        <tr class="">
-            <td>{{vinNum}}</td>
-            <td>{{engineNo}}</td>
-            <td>{{model}}</td>
-            <td>{{dom}}</td>
-            <td>{{status}}</td>
-            <td>{{owner}}</td>
-            <td>{{address}}</td>
-            <td>{{dor}}</td>
-            <td>{{numberPlate}}</td>
-        </tr>
-        {{/listings}}
-    </table>
+   

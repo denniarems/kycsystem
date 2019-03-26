@@ -20,3 +20,9 @@ loginPolice = event => {
 		)
 	}
 }
+
+putStatus = (event, index, status) => {
+	event.preventDefault()
+	console.log(status)
+	$.post('/putStatus', { index, status }, 'json')
+}

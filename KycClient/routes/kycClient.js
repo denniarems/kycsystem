@@ -20,13 +20,7 @@ function addUserData(Key, name, email, dob, location, mobile, pincode, aadhar) {
 		pincode,
 		aadhar,
 	].join(',')
-	console.log(payload)
-
-	if (Key === USERKEY) {
-		createTransaction(FAMILY_NAME, [address], [address], Key, payload)
-	} else {
-		console.log('not a user, invalid privateKey')
-	}
+	createTransaction(FAMILY_NAME, [address], [address], Key, payload)
 }
 function verifyUser(key, userPublicKey, pincode, action) {
 	const address = getUserAddress(pincode, userPublicKey)
@@ -50,4 +44,10 @@ async function getUserData() {
 	let UserAddress = hash(FAMILY_NAME).substr(0, 6)
 	return getState(UserAddress, true)
 }
-module.exports = { addUserData, verifyUser, getUserData, checkPoliceKey }
+
+module.exports = {
+	addUserData,
+	verifyUser,
+	getUserData,
+	checkPoliceKey,
+}

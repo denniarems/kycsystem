@@ -55,28 +55,29 @@ router.get('/policeUi', async (req, res) => {
 		if (!users.data) return
 		let decodedData = Buffer.from(users.data, 'base64').toString()
 		let data = decodedData.split(',')
-		console.log(decodedData)
-		console.log(data)
-
 		usersList.push({
-			name: data[1],
-			email: data[4],
-			model: data[3],
+			name: data[0],
+			email: data[1],
 			dob: data[2],
-			location: data[6],
-			address: data[9],
-			mobile: data[5],
-			pincode: data[6],
-			aadhar: data[7],
+			address: data[3],
+			mobile: data[4],
+			pincode: data[5],
+			aadhar: data[6],
+			pub_key: data[7],
 		})
 	})
-
+	console.log('index', usersList)
 	res.render('policeUi', { listings: usersList })
 })
 router.post('/checkPoliceKey', (req, res) => {
 	key = req.body.privateKey
 	status = checkPoliceKey(key)
 	res.send({ status: status })
+})
+router.post('/putStatus', (req, res) => {
+	arrayIndex = req.body.index
+	action = req.body.status
+	usersList = getData()
 })
 router.post('/getKey', (req, res, next) => {
 	key = req.body.privateKey

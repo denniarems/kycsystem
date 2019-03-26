@@ -21,7 +21,16 @@ addUserData = (
 	aadhar,
 ) => {
 	let user_Address = tp.getUserAddress(pincode, userPublicKey)
-	let user_detail = [name, email, dob, address, mobile, pincode, aadhar]
+	let user_detail = [
+		name,
+		email,
+		dob,
+		address,
+		mobile,
+		pincode,
+		aadhar,
+		userPublicKey,
+	]
 	return tp.writeToState(context, user_Address, user_detail)
 }
 verifyUser = (context, action, userPublicKey, pincode) => {
