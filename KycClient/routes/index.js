@@ -5,6 +5,7 @@ const {
 	verifyUser,
 	checkPoliceKey,
 	getUserData,
+	getData,
 } = require('./kycClient')
 const { getUserPublicKey } = require('./lib/transaction')
 
@@ -48,25 +49,7 @@ router.get('/police', (req, res, next) => {
 	res.render('police', { name: 'Police' })
 })
 router.get('/policeUi', async (req, res) => {
-	let stateData = await getUserData()
-	//console.log("listings", stateData);
-	let usersList = []
-	stateData.data.forEach(users => {
-		if (!users.data) return
-		let decodedData = Buffer.from(users.data, 'base64').toString()
-		let data = decodedData.split(',')
-		usersList.push({
-			name: data[0],
-			email: data[1],
-			dob: data[2],
-			address: data[3],
-			mobile: data[4],
-			pincode: data[5],
-			aadhar: data[6],
-			pub_key: data[7],
-		})
-	})
-	console.log('index', usersList)
+	let usersList = await getData()
 	res.render('policeUi', { listings: usersList })
 })
 router.post('/checkPoliceKey', (req, res) => {
@@ -75,9 +58,11 @@ router.post('/checkPoliceKey', (req, res) => {
 	res.send({ status: status })
 })
 router.post('/putStatus', (req, res) => {
-	arrayIndex = req.body.index
-	action = req.body.status
-	usersList = getData()
+	const pincode = req.body.pincode
+	const pub_key = req.body.pub_key
+	const status = req.body.status
+	const privateKey = req.body.privateKey
+	verifyUser(privateKey, pub_key, pincode, status)
 })
 router.post('/getKey', (req, res, next) => {
 	key = req.body.privateKey

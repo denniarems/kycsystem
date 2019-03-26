@@ -44,10 +44,31 @@ async function getUserData() {
 	let UserAddress = hash(FAMILY_NAME).substr(0, 6)
 	return getState(UserAddress, true)
 }
-
+async function getData() {
+	let stateData = await getUserData()
+	//console.log("listings", stateData);
+	let usersList = []
+	stateData.data.forEach(users => {
+		if (!users.data) return
+		let decodedData = Buffer.from(users.data, 'base64').toString()
+		let data = decodedData.split(',')
+		usersList.push({
+			name: data[0],
+			email: data[1],
+			dob: data[2],
+			address: data[3],
+			mobile: data[4],
+			pincode: data[5],
+			aadhar: data[6],
+			pub_key: data[7],
+		})
+	})
+	return usersList
+}
 module.exports = {
 	addUserData,
 	verifyUser,
 	getUserData,
 	checkPoliceKey,
+	getData,
 }

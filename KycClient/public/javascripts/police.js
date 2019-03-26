@@ -2,7 +2,7 @@ loginPolice = event => {
 	event.preventDefault()
 	sessionStorage.clear()
 	const privateKey = document.getElementById('priv_key').value
-	sessionStorage.setItem('privatekey', privateKey)
+	sessionStorage.setItem('priv_key', privateKey)
 	if (!privateKey) {
 		alert('Input is empty')
 	} else {
@@ -20,9 +20,9 @@ loginPolice = event => {
 		)
 	}
 }
-
-putStatus = (event, index, status) => {
+// modelOpen = (event, index) => {}
+putStatus = (event, pincode, pub_key, status) => {
 	event.preventDefault()
-	console.log(status)
-	$.post('/putStatus', { index, status }, 'json')
+	const privateKey = sessionStorage.getItem('priv_key')
+	$.post('/putStatus', { privateKey, pincode, pub_key, status }, 'json')
 }
