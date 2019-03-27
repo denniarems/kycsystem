@@ -50,7 +50,14 @@ router.get('/police', (req, res, next) => {
 })
 router.get('/policeUi', async (req, res) => {
 	let usersList = await getData()
-	res.render('policeUi', { listings: usersList })
+	let users = []
+	for (let index = 0; index < usersList.length; index++) {
+		const user = usersList[index]
+		if (user['action'] == -1) {
+			users.push(user)
+		}
+	}
+	res.render('policeUi', { listings: users })
 })
 router.post('/checkPoliceKey', (req, res) => {
 	key = req.body.privateKey
@@ -66,9 +73,7 @@ router.post('/putStatus', (req, res) => {
 })
 router.post('/getKey', (req, res, next) => {
 	key = req.body.privateKey
-	console.log('key', key)
 	key = getUserPublicKey(key)
-	console.log('key', key)
 	res.send({ publicKey: key })
 })
 

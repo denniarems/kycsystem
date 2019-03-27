@@ -35,8 +35,6 @@ class tpFun {
 		return context.setState(entries)
 	}
 	deleteFromState(context, address) {
-		console.log('inside delete', address)
-
 		return context.deleteState([address])
 	}
 

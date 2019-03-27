@@ -19,6 +19,7 @@ addUserData = (
 	mobile,
 	pincode,
 	aadhar,
+	action,
 ) => {
 	let user_Address = tp.getUserAddress(pincode, userPublicKey)
 	let user_detail = [
@@ -30,6 +31,7 @@ addUserData = (
 		pincode,
 		aadhar,
 		userPublicKey,
+		action,
 	]
 	return tp.writeToState(context, user_Address, user_detail)
 }
@@ -44,7 +46,12 @@ verifyUser = (context, action, userPublicKey, pincode) => {
 			return tp.deleteFromState(context, address)
 		} else {
 			let stateJSON = decoder.decode(data[address])
-			let newData = stateJSON + ',' + [action].join(',')
+			console.log('StateJSON', stateJSON)
+			let SlicedData = stateJSON.slice(0, -3)
+			console.log('SlicedData', SlicedData)
+			let newData = SlicedData + ',' + [action].join(',')
+			console.log('newData ', newData)
+
 			return tp.writeToState(context, address, newData)
 		}
 	})
@@ -61,11 +68,14 @@ class KnowYourCustomer extends TransactionHandler {
 		let PayloadBytes = decoder.decode(transactionProcessRequest.payload)
 		let userPublicKey = transactionProcessRequest.header.signerPublicKey
 		let Payload = PayloadBytes.toString().split(',')
-		let action = parseInt(Payload[0])
+		console.log(Payload)
+
+		let action = parseInt(Payload[7])
 		if (action == -1) {
 			return addUserData(
 				context,
 				userPublicKey,
+				Payload[0],
 				Payload[1],
 				Payload[2],
 				Payload[3],

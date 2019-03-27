@@ -12,7 +12,7 @@ async function sendTransaction(batchListBytes) {
 		headers: { 'Content-Type': 'application/octet-stream' },
 		body: batchListBytes,
 	})
-	console.log('response', resp)
+	// console.log('response', resp)
 }
 createTransaction = (
 	familyName,

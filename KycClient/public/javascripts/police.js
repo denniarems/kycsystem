@@ -25,4 +25,5 @@ putStatus = (event, pincode, pub_key, status) => {
 	event.preventDefault()
 	const privateKey = sessionStorage.getItem('priv_key')
 	$.post('/putStatus', { privateKey, pincode, pub_key, status }, 'json')
+	window.location.href = '/'
 }

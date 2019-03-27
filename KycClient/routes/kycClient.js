@@ -8,10 +8,9 @@ POLICEKEY = '4206848f09f0953370fc3e4a131faeab07e239d451190294e5049cfcf05a107e'
 
 function addUserData(Key, name, email, dob, location, mobile, pincode, aadhar) {
 	let address = getUserAddress(pincode, getUserPublicKey(Key))
-	console.log(address)
+	console.log('inside adduserdata on client')
 	let action = -1
 	let payload = [
-		action,
 		name,
 		email,
 		dob,
@@ -19,10 +18,15 @@ function addUserData(Key, name, email, dob, location, mobile, pincode, aadhar) {
 		mobile,
 		pincode,
 		aadhar,
+		action,
 	].join(',')
+	console.log(payload)
+
 	createTransaction(FAMILY_NAME, [address], [address], Key, payload)
 }
 function verifyUser(key, userPublicKey, pincode, action) {
+	console.log('verifyuser on client')
+
 	const address = getUserAddress(pincode, userPublicKey)
 	let payload = [action, userPublicKey, pincode].join(',')
 	if (key == POLICEKEY) {
@@ -61,6 +65,7 @@ async function getData() {
 			pincode: data[5],
 			aadhar: data[6],
 			pub_key: data[7],
+			action: data[8],
 		})
 	})
 	return usersList
