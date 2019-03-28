@@ -4,7 +4,6 @@ const {
 	addUserData,
 	verifyUser,
 	checkPoliceKey,
-	getUserData,
 	getData,
 } = require('./kycClient')
 const { getUserPublicKey } = require('./lib/transaction')
@@ -31,8 +30,19 @@ router.post('/userData', (req, res, next) => {
 		const mobile = req.body.mobile
 		const pincode = req.body.pincode
 		const aadhar = req.body.aadhar
+		const enKey = req.body.enKey
 		console.log('Data sent to REST API')
-		addUserData(Key, name, email, dob, location, mobile, pincode, aadhar)
+		addUserData(
+			Key,
+			enKey,
+			name,
+			email,
+			dob,
+			location,
+			mobile,
+			pincode,
+			aadhar,
+		)
 		res.send({ message: 'Data successfully added' })
 	} catch (error) {
 		console.log(error)
@@ -53,9 +63,9 @@ router.get('/policeUi', async (req, res) => {
 	let users = []
 	for (let index = 0; index < usersList.length; index++) {
 		const user = usersList[index]
-		if (user['action'] == -1) {
-			users.push(user)
-		}
+		// if (user['action'] == -1) {
+		users.push(user)
+		// }
 	}
 	res.render('policeUi', { listings: users })
 })
@@ -65,11 +75,10 @@ router.post('/checkPoliceKey', (req, res) => {
 	res.send({ status: status })
 })
 router.post('/putStatus', (req, res) => {
-	const pincode = req.body.pincode
 	const pub_key = req.body.pub_key
 	const status = req.body.status
 	const privateKey = req.body.privateKey
-	verifyUser(privateKey, pub_key, pincode, status)
+	verifyUser(privateKey, pub_key, status)
 })
 router.post('/getKey', (req, res, next) => {
 	key = req.body.privateKey

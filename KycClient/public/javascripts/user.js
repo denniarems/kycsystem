@@ -27,6 +27,7 @@ userData = event => {
 	const mobile = document.getElementById('mobile').value
 	const pincode = document.getElementById('pincode').value
 	const aadhar = document.getElementById('aadhar').value
+	const enKey = document.getElementById('enKey').value
 	const privateKey = sessionStorage.getItem('privatekey')
 	sessionStorage.clear()
 	$.post(
@@ -40,6 +41,7 @@ userData = event => {
 			mobile: mobile,
 			pincode: pincode,
 			aadhar: aadhar,
+			enKey: enKey,
 		},
 		'json',
 	)
@@ -50,7 +52,7 @@ document.getElementById('publicKeyOnUserForm').value = sessionStorage.getItem(
 )
 document.getElementById('name').value = 'Dennis'
 document.getElementById('email').value = 'hehe@hihi.in'
-document.getElementById('dob').value
+document.getElementById('dob').value = new Date()
 document.getElementById('adderss').value = 'it doesnt matter'
 document.getElementById('mobile').value = 2255
 document.getElementById('pincode').value = 300303003

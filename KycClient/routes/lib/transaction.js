@@ -7,7 +7,7 @@ const { Secp256k1PrivateKey } = require('sawtooth-sdk/signing/secp256k1')
 const { createContext, CryptoFactory } = require('sawtooth-sdk/signing')
 const fetch = require('node-fetch')
 var encoder = new TextEncoder('utf8')
-
+const iv = Buffer.alloc(16, 0)
 NAMESPACE = 'Kyc Chain'
 
 // function to hash data
@@ -17,11 +17,10 @@ hash = data => {
 		.update(data)
 		.digest('hex')
 }
-getUserAddress = (pincode, pKey) => {
+getUserAddress = pKey => {
 	let keyHash = hash(pKey)
 	let nameHash = hash(NAMESPACE)
-	let pinHash = hash(pincode)
-	return nameHash.slice(0, 6) + pinHash.slice(0, 6) + keyHash.slice(0, 58)
+	return nameHash.slice(0, 12) + keyHash.slice(0, 58)
 }
 getUserPublicKey = Key => {
 	const context = createContext('secp256k1')
@@ -43,10 +42,24 @@ async function getState(address, isQuery) {
 	let stateJSON = await stateResponse.json()
 	return stateJSON
 }
+encrypt = (data, enKey) => {
+	let cipher = crypto.createCipher('aes-256-ctr', enKey, iv)
+	let crypted = cipher.update(data, 'utf8', 'hex')
+	crypted += cipher.final('hex')
+	return crypted
+}
 
+decrypt = (data, enKey) => {
+	let decipher = crypto.createDecipher('aes-256-ctr', enKey, iv)
+	let dec = decipher.update(data, 'hex', 'utf8')
+	dec += decipher.final('utf8')
+	return dec
+}
 module.exports = {
 	getUserPublicKey,
 	getUserAddress,
 	hash,
 	getState,
+	encrypt,
+	decrypt,
 }

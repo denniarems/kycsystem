@@ -19,6 +19,7 @@
                 <td>
                     <!-- Button trigger modal -->
                     <button 
+                    {{!-- onclick="moreInfo({{mobile}}) --}}
                     class="btn-dark" 
                         data-toggle="modal" 
                         data-target="#moreData" 
@@ -33,8 +34,8 @@
                         >More</button>
                 </td>
                 <td>
-                    <button class="btn-success" onclick="putStatus(event,'{{pincode}}','{{pub_key}}',1)" >Accept</button>
-                    <button class="btn-danger" onclick="putStatus(event,'{{pincode}}','{{pub_key}}',0)" >Reject</button>
+                    <button class="btn-success" onclick="putStatus(event,'{{pub_key}}',1)" >Accept</button>
+                    <button class="btn-danger" onclick="putStatus(event,'{{pub_key}}',0)" >Reject</button>
                 </td>
             </tr>
             {{/listings}}
@@ -87,8 +88,8 @@
            $('#pincode').text(button[0].dataset.pincode);
            $('#aadhar').text(button[0].dataset.aadhar);
            $('#pub_key').text(button[0].dataset.pub_key);
-           $("#accept").attr("onclick", "putStatus(event,'"+button[0].dataset.pincode+"','"+button[0].dataset.pub_key+"',1)");
-           $("#reject").attr("onclick", "putStatus(event,'"+button[0].dataset.pincode+"','"+button[0].dataset.pub_key+"',0)");
+           $("#accept").attr("onclick", "putStatus(event,'"+button[0].dataset.pub_key+"',1)");
+           $("#reject").attr("onclick", "putStatus(event,'"+button[0].dataset.pub_key+"',0)");
            // Use above variables to manipulate the DOM
            
        });

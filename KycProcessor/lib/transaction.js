@@ -28,7 +28,7 @@ class tpFun {
     data - the data tto be written
     */
 	writeToState(context, address, data) {
-		this.dataBytes = encoder.encode(data)
+		this.dataBytes = encoder.encode(JSON.stringify(data))
 		let entries = {
 			[address]: this.dataBytes,
 		}
@@ -39,19 +39,29 @@ class tpFun {
 	}
 
 	/* function to retrive the address of a particular vehicle based on its vin number */
-	getUserAddress(pincode, pKey) {
-		console.log('pincode is ', pincode)
-
+	getUserAddress(pKey) {
 		let keyHash = this.hash(pKey)
 		let nameHash = this.hash(NAMESPACE)
-		let pinHash = this.hash(pincode)
-		return nameHash.slice(0, 6) + pinHash.slice(0, 6) + keyHash.slice(0, 58)
+		return nameHash.slice(0, 12) + keyHash.slice(0, 58)
 	}
 	getUserPublicKey(Key) {
 		const context = createContext('secp256k1')
 		let key = Secp256k1PrivateKey.fromHex(Key)
 		let signer = new CryptoFactory(context).newSigner(key)
 		return (publicKeyHex = signer.getPublicKey().asHex())
+	}
+	encrypt(data, enKey) {
+		let cipher = crypto.createCipher('aes-256-ctr', enKey, iv)
+		let crypted = cipher.update(data, 'utf8', 'hex')
+		crypted += cipher.final('hex')
+		return crypted
+	}
+
+	decrypt(data, enKey) {
+		let decipher = crypto.createDecipher('aes-256-ctr', enKey, iv)
+		let dec = decipher.update(data, 'hex', 'utf8')
+		dec += decipher.final('utf8')
+		return dec
 	}
 }
 

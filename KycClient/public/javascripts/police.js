@@ -21,9 +21,9 @@ loginPolice = event => {
 	}
 }
 // modelOpen = (event, index) => {}
-putStatus = (event, pincode, pub_key, status) => {
+putStatus = (event, pub_key, status) => {
 	event.preventDefault()
 	const privateKey = sessionStorage.getItem('priv_key')
-	$.post('/putStatus', { privateKey, pincode, pub_key, status }, 'json')
+	$.post('/putStatus', { privateKey, pub_key, status }, 'json')
 	window.location.href = '/'
 }

@@ -1,69 +1,69 @@
-version: "2.0"
+version: '2.0'
 
 services:
-  kyc_client:
-    container_name: kyc-client
-    build:
-      context: .
-      dockerfile: ./KycClient/Dockerfile
-    expose:
-      - 3001
-    ports:
-      - 3001:3000
-    volumes:
-      - ".:/project/KYC"
+    kyc_client:
+        container_name: kyc-client
+        build:
+            context: .
+            dockerfile: ./KycClient/Dockerfile
+        expose:
+            - 3001
+        ports:
+            - 3001:3000
+        volumes:
+            - '.:/project/KYC'
 
-  kyc-processor:
-    container_name: kyc-processor
-    build:
-      context: .
-      dockerfile: ./KycProcessor/DockerFile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    depends_on:
-      - validator
-    volumes:
-      - ".:/project/KYC"
+    kyc-processor:
+        container_name: kyc-processor
+        build:
+            context: .
+            dockerfile: ./KycProcessor/DockerFile
+            args:
+                - http_proxy
+                - https_proxy
+                - no_proxy
+        depends_on:
+            - validator
+        volumes:
+            - '.:/project/KYC'
 
-  sawtooth-rest-api:
-    container_name: rest-api
-    image: hyperledger/sawtooth-rest-api:1.0
-    expose:
-      - 8008
-    ports:
-      - "8008:8008"
-    depends_on:
-      - validator
-    entrypoint: |
-      sawtooth-rest-api -vvv
-        --connect tcp://validator:4004
-        --bind sawtooth-rest-api:8008
+    sawtooth-rest-api:
+        container_name: rest-api
+        image: hyperledger/sawtooth-rest-api:1.0
+        expose:
+            - 8008
+        ports:
+            - '8008:8008'
+        depends_on:
+            - validator
+        entrypoint: |
+            sawtooth-rest-api -vvv
+              --connect tcp://validator:4004
+              --bind sawtooth-rest-api:8008
 
-  settings-tp:
-    image: hyperledger/sawtooth-settings-tp:1.0
-    depends_on:
-      - validator
-    command: settings-tp -vv --connect tcp://validator:4004
+    settings-tp:
+        image: hyperledger/sawtooth-settings-tp:1.0
+        depends_on:
+            - validator
+        command: settings-tp -vv --connect tcp://validator:4004
 
-  validator:
-    container_name: validator
-    image: hyperledger/sawtooth-validator:1.0
-    expose:
-      - 4004
-    ports:
-      - "4004:4004"
-    command: |
-      bash -c "
-        if [ ! -f /etc/sawtooth/keys/validator.priv ]; then
-        sawadm keygen &&
-        sawtooth keygen my_key &&
-        sawset genesis -k /root/.sawtooth/keys/my_key.priv &&
-        sawadm genesis config-genesis.batch
-        fi;
-        sawtooth-validator -vvv \
-          --endpoint tcp://validator:8800 \
-          --bind component:tcp://eth0:4004 \
-          --bind network:tcp://eth0:8800
-      "
+    validator:
+        container_name: validator
+        image: hyperledger/sawtooth-validator:1.0
+        expose:
+            - 4004
+        ports:
+            - '4004:4004'
+        command: |
+            bash -c "
+              if [ ! -f /etc/sawtooth/keys/validator.priv ]; then
+              sawadm keygen &&
+              sawtooth keygen my_key &&
+              sawset genesis -k /root/.sawtooth/keys/my_key.priv &&
+              sawadm genesis config-genesis.batch
+              fi;
+              sawtooth-validator -vvv \
+                --endpoint tcp://validator:8800 \
+                --bind component:tcp://eth0:4004 \
+                --bind network:tcp://eth0:8800
+            "
