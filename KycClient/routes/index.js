@@ -64,6 +64,8 @@ router.get('/policeUi', async (req, res) => {
 	for (let index = 0; index < usersList.length; index++) {
 		const user = usersList[index]
 		// if (user['action'] == -1) {
+		console.log(index, user)
+
 		users.push(user)
 		// }
 	}

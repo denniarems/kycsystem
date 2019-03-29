@@ -23,6 +23,8 @@ verifyUser = (context, action, userPublicKey) => {
 			return tp.deleteFromState(context, address)
 		} else {
 			let stateData = decoder.decode(data[address])
+			console.log('data[address]', data[address])
+			console.log('data', data)
 			console.log('stateData', stateData)
 			let Payload = JSON.parse(stateData)
 			console.log('Payload', Payload)

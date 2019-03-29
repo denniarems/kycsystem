@@ -49,36 +49,40 @@ function checkPoliceKey(key) {
 	return key === POLICEKEY ? 0 : 1
 }
 
-async function getUserData() {
+async function getUsersData() {
 	let UserAddress = hash(FAMILY_NAME).substr(0, 6)
 	return getState(UserAddress, true)
 }
 async function getData() {
-	let stateData = await getUserData()
-	//console.log("listings", stateData);
-	let usersList = []
-	stateData.data.forEach(users => {
-		if (!users.data) return
-		let decodedData = Buffer.from(users.data, 'base64').toString()
-		console.log('Data in getData', decodedData)
-		let data = JSON.parse(decodedData)
-		// data = decrypt(data, enKey)
-		// data = JSON.parse(data)
-		console.log('Data in getData', data[1])
-		if (data.length == 3) {
-			usersList.push({
-				name: data[0],
-				mobile: data[1],
-				address: data[2],
-			})
-		}
-	})
-	return usersList
+	try {
+		let usersList = []
+		let stateData = await getUsersData()
+		// console.log('listings', stateData)
+		stateData.data.forEach(users => {
+			if (!users.data) return
+			let decodedData = Buffer.from(users.data, 'base64').toString()
+			let data = JSON.parse(decodedData)
+			console.log('Data in getData', data[1])
+			if (data[1].length == 3) {
+				console.log('hi')
+
+				usersList.push({
+					name: data[1][0],
+					mobile: data[1][1],
+					address: data[1][2],
+					stateAddress: users.address,
+				})
+				console.log(usersList)
+			}
+		})
+		return usersList
+	} catch (error) {
+		console.log(error)
+	}
 }
 module.exports = {
 	addUserData,
 	verifyUser,
-	getUserData,
 	checkPoliceKey,
 	getData,
 }
