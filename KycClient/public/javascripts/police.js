@@ -1,7 +1,7 @@
 loginPolice = event => {
 	event.preventDefault()
 	sessionStorage.clear()
-	const privateKey = document.getElementById('priv_key').value
+	const privateKey = document.getElementById('priv_key').textue
 	sessionStorage.setItem('priv_key', privateKey)
 	if (!privateKey) {
 		alert('Input is empty')
@@ -47,12 +47,17 @@ checkDeKey = event => {
 					'/decryptData',
 					{ result, deKey },
 					(data, textStatus, jqXHR) => {
-						console.log(data.user)
-						console.log(data.user.length)
+						$('#name').text(data.user[0])
+						$('#email').text(data.user[1])
+						$('#dob').text(data.user[2])
+						$('#address').text(data.user[3])
+						$('#mobile').text(data.user[4])
+						$('#pincode').text(data.user[5])
+						$('#aadhar').text(data.user[6])
+						$('#moreData').modal('show')
 					},
 					'json',
 				)
-				$('#moreData').modal('show')
 			},
 		})
 	}
