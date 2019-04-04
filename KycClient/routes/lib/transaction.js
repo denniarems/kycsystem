@@ -6,7 +6,6 @@ const crypto = require('crypto')
 const { Secp256k1PrivateKey } = require('sawtooth-sdk/signing/secp256k1')
 const { createContext, CryptoFactory } = require('sawtooth-sdk/signing')
 const fetch = require('node-fetch')
-var encoder = new TextEncoder('utf8')
 const iv = Buffer.alloc(16, 0)
 NAMESPACE = 'Kyc Chain'
 
@@ -49,8 +48,8 @@ encrypt = (data, enKey) => {
 	return crypted
 }
 
-decrypt = (data, enKey) => {
-	let decipher = crypto.createDecipher('aes-256-ctr', enKey, iv)
+decrypt = (data, deKey) => {
+	let decipher = crypto.createDecipher('aes-256-ctr', deKey, iv)
 	let dec = decipher.update(data, 'hex', 'utf8')
 	dec += decipher.final('utf8')
 	return dec

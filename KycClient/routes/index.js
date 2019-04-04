@@ -6,7 +6,8 @@ const {
 	checkPoliceKey,
 	getData,
 } = require('./kycClient')
-const { getUserPublicKey } = require('./lib/transaction')
+const fetch = require('node-fetch')
+const { getUserPublicKey, decrypt } = require('./lib/transaction')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -64,8 +65,6 @@ router.get('/policeUi', async (req, res) => {
 	for (let index = 0; index < usersList.length; index++) {
 		const user = usersList[index]
 		// if (user['action'] == -1) {
-		console.log(index, user)
-
 		users.push(user)
 		// }
 	}
@@ -82,10 +81,32 @@ router.post('/putStatus', (req, res) => {
 	const privateKey = req.body.privateKey
 	verifyUser(privateKey, pub_key, status)
 })
+router.post('/decryptData', (req, res) => {
+	var data = req.body.result
+	const deKey = req.body.deKey
+	var BufferData = Buffer.from(data, 'base64').toString('ascii')
+	data = decrypt(JSON.parse(BufferData)[0], deKey)
+	data = JSON.parse(data)
+	res.send({ user: data })
+})
 router.post('/getKey', (req, res, next) => {
 	key = req.body.privateKey
 	key = getUserPublicKey(key)
 	res.send({ publicKey: key })
+})
+router.get('/statedata', async (req, res, next) => {
+	try {
+		var geturl = 'http://rest-api:8008/state/' + req.query.address
+		let response = await fetch(geturl, {
+			method: 'GET',
+		})
+		let responseJson = await response.json()
+		var data = responseJson.data
+		res.send(data)
+	} catch (error) {
+		res.status(500)
+		res.send(error)
+	}
 })
 
 module.exports = router

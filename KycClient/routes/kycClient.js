@@ -28,9 +28,11 @@ function addUserData(
 	payload = JSON.stringify(payload)
 	//encryption
 	encryptedPayload = encrypt(payload, enKey)
+	console.log('Encrypted Payload', encryptedPayload)
+	console.log('Decrypted Payload', decrypt(encryptedPayload, enKey))
+
 	let appendedPayload = [-1, [encryptedPayload, [name, mobile, location]]]
 	appendedPayload = JSON.stringify(appendedPayload)
-	console.log('add user data client', appendedPayload)
 
 	createTransaction(FAMILY_NAME, [address], [address], Key, appendedPayload)
 }
@@ -62,17 +64,13 @@ async function getData() {
 			if (!users.data) return
 			let decodedData = Buffer.from(users.data, 'base64').toString()
 			let data = JSON.parse(decodedData)
-			console.log('Data in getData', data[1])
 			if (data[1].length == 3) {
-				console.log('hi')
-
 				usersList.push({
 					name: data[1][0],
 					mobile: data[1][1],
 					address: data[1][2],
 					stateAddress: users.address,
 				})
-				console.log(usersList)
 			}
 		})
 		return usersList
