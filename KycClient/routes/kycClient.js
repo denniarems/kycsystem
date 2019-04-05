@@ -24,20 +24,26 @@ function addUserData(
 ) {
 	let address = getUserAddress(getUserPublicKey(Key))
 	console.log('inside adduserdata on client')
-	let payload = [name, email, dob, location, mobile, pincode, aadhar]
+	let payload = [
+		name,
+		email,
+		dob,
+		location,
+		mobile,
+		pincode,
+		aadhar,
+		getUserPublicKey(Key),
+	]
 	payload = JSON.stringify(payload)
 	//encryption
 	encryptedPayload = encrypt(payload, enKey)
 	console.log('Encrypted Payload', encryptedPayload)
-	console.log('Decrypted Payload', decrypt(encryptedPayload, enKey))
-
 	let appendedPayload = [-1, [encryptedPayload, [name, mobile, location]]]
 	appendedPayload = JSON.stringify(appendedPayload)
 
 	createTransaction(FAMILY_NAME, [address], [address], Key, appendedPayload)
 }
 function verifyUser(key, userPublicKey, action) {
-	console.log('verifyuser on client')
 	const address = getUserAddress(userPublicKey)
 	let payload = [action, userPublicKey]
 	payload = JSON.stringify(payload)
@@ -47,6 +53,7 @@ function verifyUser(key, userPublicKey, action) {
 		console.log('not a police , invalid PrivateKey')
 	}
 }
+
 function checkPoliceKey(key) {
 	return key === POLICEKEY ? 0 : 1
 }
@@ -78,6 +85,7 @@ async function getData() {
 		console.log(error)
 	}
 }
+
 module.exports = {
 	addUserData,
 	verifyUser,

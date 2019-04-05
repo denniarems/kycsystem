@@ -47,9 +47,8 @@ class KnowYourCustomer extends TransactionHandler {
 		let action = parseInt(Payload[0])
 		if (action == -1) {
 			return addUserData(context, userPublicKey, Payload[1])
-		} else if (action <= 1) {
-			return verifyUser(context, Payload[0], Payload[1])
 		} else {
+			return verifyUser(context, Payload[0], Payload[1])
 		}
 	}
 }

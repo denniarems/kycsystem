@@ -1,7 +1,7 @@
 loginPolice = event => {
 	event.preventDefault()
 	sessionStorage.clear()
-	const privateKey = document.getElementById('priv_key').textue
+	const privateKey = document.getElementById('priv_key').value
 	sessionStorage.setItem('priv_key', privateKey)
 	if (!privateKey) {
 		alert('Input is empty')
@@ -25,7 +25,7 @@ putStatus = (event, pub_key, status) => {
 	event.preventDefault()
 	const privateKey = sessionStorage.getItem('priv_key')
 	$.post('/putStatus', { privateKey, pub_key, status }, 'json')
-	window.location.href = '/'
+	location.reload()
 }
 
 checkDeKey = event => {
@@ -54,7 +54,16 @@ checkDeKey = event => {
 						$('#mobile').text(data.user[4])
 						$('#pincode').text(data.user[5])
 						$('#aadhar').text(data.user[6])
+						$('#pub_key').text(data.user[7])
 						$('#moreData').modal('show')
+						$('#ModalAccept').attr(
+							'onclick',
+							'putStatus(event,"' + data.user[7] + '",1)',
+						)
+						$('#ModalReject').attr(
+							'onclick',
+							'putStatus(event,"' + data.user[7] + '",0)',
+						)
 					},
 					'json',
 				)

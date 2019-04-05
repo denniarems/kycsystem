@@ -7,17 +7,22 @@ const {
 	getData,
 } = require('./kycClient')
 const fetch = require('node-fetch')
-const { getUserPublicKey, decrypt } = require('./lib/transaction')
+const {
+	getUserPublicKey,
+	getUserAddress,
+	decrypt,
+} = require('./lib/transaction')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
 	res.render('home')
 })
-
 /* GET user page. */
 router.get('/user', (req, res, next) => {
 	res.render('user', { name: 'User' })
 })
+
+/* GET user User form page. */
 router.get('/userform', (req, res, next) => {
 	res.render('userform')
 })
@@ -49,12 +54,24 @@ router.post('/userData', (req, res, next) => {
 		console.log(error)
 	}
 })
-
 /* GET client page. */
 router.get('/client', (req, res, next) => {
 	res.render('client', { name: 'Client' })
 })
+router.get('/clientUi', (req, res, next) => {
+	res.render('clientUi', { name: 'Client' })
+})
 
+router.post('/getAddressFromPrivKey', (req, res) => {
+	let PublicKey = getUserPublicKey(req.body.pKey)
+	let address = getUserAddress(PublicKey)
+	res.send({ address: address })
+})
+router.post('/getAddressFromPubKey', (req, res) => {
+	let PublicKey = req.body.pub_key
+	let address = getUserAddress(PublicKey)
+	res.send({ address: address })
+})
 /* GET police page. */
 router.get('/police', (req, res, next) => {
 	res.render('police', { name: 'Police' })
@@ -64,9 +81,7 @@ router.get('/policeUi', async (req, res) => {
 	let users = []
 	for (let index = 0; index < usersList.length; index++) {
 		const user = usersList[index]
-		// if (user['action'] == -1) {
 		users.push(user)
-		// }
 	}
 	res.render('policeUi', { listings: users })
 })
@@ -88,6 +103,14 @@ router.post('/decryptData', (req, res) => {
 	data = decrypt(JSON.parse(BufferData)[0], deKey)
 	data = JSON.parse(data)
 	res.send({ user: data })
+})
+router.post('/VerifyData', (req, res) => {
+	var data = req.body.result
+	var BufferData = Buffer.from(data, 'base64').toString('ascii')
+	data = JSON.parse(JSON.parse(BufferData))[1]
+	console.log('one is ', data)
+
+	res.send({ status: data })
 })
 router.post('/getKey', (req, res, next) => {
 	key = req.body.privateKey

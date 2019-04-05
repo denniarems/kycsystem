@@ -16,8 +16,8 @@ hash = data => {
 		.update(data)
 		.digest('hex')
 }
-getUserAddress = pKey => {
-	let keyHash = hash(pKey)
+getUserAddress = PublicKey => {
+	let keyHash = hash(PublicKey)
 	let nameHash = hash(NAMESPACE)
 	return nameHash.slice(0, 12) + keyHash.slice(0, 58)
 }
