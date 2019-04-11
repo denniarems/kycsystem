@@ -3,8 +3,8 @@
 <div id="box" class="container">
     <h2>{{name}}</h2>
     <div class="jumbotron">
-            <button class="btn btn-primary" id="decrypt" data-toggle="modal" data-target="#decrypt">View Data</button>
-            <button class="btn btn-primary" id="changeKey" data-toggle="modal" data-target="#changeKey">Change Password</button>
+            <button class="btn btn-primary" id="viewData" data-toggle="modal" data-target="#decrypt">View Data</button>
+            <button class="btn btn-primary" id="change" data-toggle="modal" data-target="#changeKey">Change Password</button>
             <a class="btn btn-primary" href="/userform">Add or Edit Data </a>
         </form>
     </div>
@@ -21,10 +21,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            Old Password : <input type="password" id="oldKey">
-                            New Password : <input type="password"  id="newKey">
+                            <br>
+                            Old Password : <input type="password" id="oldKey"><br>
+                            New Password : <input type="password"  id="newKey"><br>
                             <button id="decrypt" data-dismiss="modal" data-toggle="modal" onclick="changePassword(event)"
-                                class="btn-danger">Decrypt Data</button>
+                                class="btn-danger">Change Password</button>
                         </div>
                     </div>
                     <div class="modal-footer">

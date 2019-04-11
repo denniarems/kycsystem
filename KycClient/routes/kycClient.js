@@ -92,9 +92,21 @@ async function getUserData(UserAddress) {
 async function changeUserKey(PrivateKey, OldKey, NewKey) {
 	const userPublicKey = getUserPublicKey(PrivateKey);
 	const userAddress = getUserAddress(userPublicKey);
-	let stateData = await getUserData(userAddress)
-	console.log(stateData);
-	
+	let stateData = await getUserData(userAddress);
+	let decodedData = Buffer.from(stateData.data[0].data, "base64").toString();
+	const payload = JSON.parse(decodedData);
+	encryptedPayload= payload[0]
+	console.log("encryptedPayload" , encryptedPayload)
+	extraPayload=payload[1]
+	console.log("extraPayload", extraPayload)
+	decryptedPayload= decrypt(encryptedPayload,OldKey)
+	console.log(JSON.parse(decryptedPayload).length)
+	// password check cheyyanam oru try catch cheyithal mathi
+	console.log("decryptedPayload", decryptedPayload)
+	newEncryptedPayload=encrypt(decryptedPayload,NewKey)
+	console.log("NewEncryptedPayload", newEncryptedPayload)
+
+	return 0;
 }
 
 module.exports = {
