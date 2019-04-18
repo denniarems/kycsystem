@@ -104,7 +104,7 @@ changePassword = event => {
 	);
 };
 
-$("#decryptKe").on("show.bs.modal", event => {
+$("#decryptKey").on("show.bs.modal", event => {
 	const button = $(event.relatedTarget);
 	const pub_key = sessionStorage.getItem("pub_key");
 	$("#decrypt").attr("data-state", pub_key);
