@@ -14,6 +14,7 @@ POLICEKEY = "4206848f09f0953370fc3e4a131faeab07e239d451190294e5049cfcf05a107e";
 
 function addUserData(
   Key,
+  pub_key,
   enKey,
   name,
   email,
@@ -23,8 +24,7 @@ function addUserData(
   pincode,
   aadhar
 ) {
-  let address = getUserAddress(getUserPublicKey(Key));
-  console.log("inside adduserdata on client");
+  let address = getUserAddress(pub_key);
   let payload = [
     name,
     email,
@@ -104,11 +104,11 @@ async function changeUserKey(PrivateKey, OldKey, NewKey) {
     console.log(JSON.parse(decryptedPayload).length);
     // password check cheyyanam oru try catch cheyithal mathi
     console.log("decryptedPayload", decryptedPayload);
-    decryptedPayload = JSON.stringify(decryptedPayload);
+    // decryptedPayload = JSON.stringify(decryptedPayload);
     console.log(" Stringify decryptedPayload", decryptedPayload);
     newEncryptedPayload = encrypt(decryptedPayload, NewKey);
   console.log("NewEncryptedPayload", newEncryptedPayload);
-  let appendedPayload = [2,[encryptedPayload,extraPayload]];
+  let appendedPayload = [2,[newEncryptedPayload,extraPayload]];
   appendedPayload = JSON.stringify(appendedPayload);
 
   createTransaction(FAMILY_NAME, [userAddress], [userAddress], PrivateKey, appendedPayload);

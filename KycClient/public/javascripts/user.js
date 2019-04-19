@@ -29,11 +29,12 @@ postUserData = event => {
 	const aadhar = document.getElementById("aadhar").value;
 	const enKey = document.getElementById("enKey").value;
 	const privateKey = sessionStorage.getItem("privatekey");
-	sessionStorage.clear();
+	const pub_key = sessionStorage.getItem("pub_key");
 	$.post(
 		"/userData",
 		{
 			privateKey: privateKey,
+			pub_key:pub_key,
 			name: name,
 			email: email,
 			dob: dob,

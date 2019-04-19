@@ -1,40 +1,42 @@
-
 {{> inav }}
 <div id="box" class="container">
     <h2>{{name}}</h2>
     <div class="jumbotron">
-            <button class="btn btn-primary" id="viewData" data-toggle="modal" data-target="#decryptKey">View Data</button>
-            <button class="btn btn-primary" id="change" data-toggle="modal" data-target="#changeKey">Change Password</button>
-            <a class="btn btn-primary" href="/userform">Add or Edit Data </a>
+        <button class="btn btn-primary" id="viewData" data-toggle="modal" data-target="#decryptKey">View Data</button>
+        <button class="btn btn-primary" id="change" data-toggle="modal" data-target="#changeKey">Change
+            Password</button>
+        <a class="btn btn-primary" href="/userform">Add or Edit Data </a>
         </form>
     </div>
 
     {{> footer }}
-        <div class="modal fade" id="changeKey" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Change Password</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <div class="modal fade" id="changeKey" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <br>
+                        Old Password : <input type="password" id="oldKey"><br>
+                        New Password : <input type="password" id="newKey"><br>
+                        <button id="decrypt" data-dismiss="modal" data-toggle="modal" onclick="changePassword(event)"
+                            class="btn-danger">Change Password</button>
                     </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <br>
-                            Old Password : <input type="password" id="oldKey"><br>
-                            New Password : <input type="password"  id="newKey"><br>
-                            <button id="decrypt" data-dismiss="modal" data-toggle="modal" onclick="changePassword(event)"
-                                class="btn-danger">Change Password</button>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-    <div class="modal fade" id="decryptKey" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    </div>
+    <div class="modal fade" id="decryptKey" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -79,5 +81,4 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="ModalAccept" class="btn-success">Accept</button>
-                    <button id="ModalReject" class="btn-danger">Reject</button </div> </div> </div> </div>
+                    </div> </div> </div> </div>

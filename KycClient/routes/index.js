@@ -36,6 +36,7 @@ router.get("/userform", (req, res, next) => {
 router.post("/userData", (req, res, next) => {
 	try {
 		const Key = req.body.privateKey;
+		const pub_key = req.body.pub_key;
 		const name = req.body.name;
 		const email = req.body.email;
 		const dob = req.body.dob;
@@ -47,6 +48,7 @@ router.post("/userData", (req, res, next) => {
 		console.log("Data sent to REST API");
 		addUserData(
 			Key,
+			pub_key,
 			enKey,
 			name,
 			email,
@@ -111,19 +113,23 @@ router.post("/putStatus", (req, res) => {
 	verifyUser(privateKey, uPub_key, status);
 });
 router.post("/decryptData", (req, res) => {
-	var data = req.body.result;
+	let data = req.body.result;
 	const deKey = req.body.deKey;
-	var BufferData = Buffer.from(data, "base64").toString("ascii");
+	let BufferData = Buffer.from(data, "base64").toString("ascii");
+	console.log("Buffer Data",JSON.parse(BufferData)[0]);
+	let status= JSON.parse(BufferData)[1]
+	console.log("Status   ",status);
+	console.log("Key",deKey);
 	data = decrypt(JSON.parse(BufferData)[0], deKey);
+	console.log("decrypted Data",data);
 	data = JSON.parse(data);
-	res.send({ user: data });
+	res.send({ user: data , status:status});
 });
 router.post("/VerifyData", (req, res) => {
-	var data = req.body.result;
-	var BufferData = Buffer.from(data, "base64").toString("ascii");
-	data = JSON.parse(JSON.parse(BufferData))[1];
-	console.log("one is ", data);
-
+	let data = req.body.result;
+	let BufferData = Buffer.from(data, "base64").toString("ascii");
+	data = JSON.parse(BufferData);
+	data = data[1];
 	res.send({ status: data });
 });
 router.post("/getKey", (req, res, next) => {
@@ -133,12 +139,12 @@ router.post("/getKey", (req, res, next) => {
 });
 router.get("/statedata", async (req, res, next) => {
 	try {
-		var geturl = "http://rest-api:8008/state/" + req.query.address;
+		let geturl = "http://rest-api:8008/state/" + req.query.address;
 		let response = await fetch(geturl, {
 			method: "GET",
 		});
 		let responseJson = await response.json();
-		var data = responseJson.data;
+		let data = responseJson.data;
 		res.send(data);
 	} catch (error) {
 		res.status(500);

@@ -41,7 +41,7 @@ verifyUser = (context, action, userPublicKey) => {
       console.log("stateData", stateData);
       let Payload = JSON.parse(stateData);
       console.log("Payload", Payload);
-      let newData = JSON.stringify([Payload[0], action]);
+      let newData = [Payload[0], action];
       console.log("newData ", newData);
       context.addEvent("Kyc Chain/Policeverified", [
         ["policeverified", address]
@@ -61,6 +61,8 @@ class KnowYourCustomer extends TransactionHandler {
   }
   //apply function
   apply(transactionProcessRequest, context) {
+    console.log("inside apply");
+    
     let PayloadBytes = decoder.decode(transactionProcessRequest.payload);
     let userPublicKey = transactionProcessRequest.header.signerPublicKey;
     let Payload = JSON.parse(PayloadBytes);
