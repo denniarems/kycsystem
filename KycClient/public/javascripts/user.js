@@ -116,8 +116,16 @@ document.getElementById("publicKeyOnUserForm").value = sessionStorage.getItem(
 );
 document.getElementById("name").value = "Dennis";
 document.getElementById("email").value = "hehe@hihi.in";
-document.getElementById("dob").value = new Date();
+let day = new Date();
+document.getElementById("dob").value = day.getDay()
+console.log(Date.now());
+
 document.getElementById("adderss").value = "it doesnt matter";
 document.getElementById("mobile").value = 2255;
 document.getElementById("pincode").value = 300303003;
 document.getElementById("aadhar").value = 12345678;
+var date1 = new Date("4/11/2019");
+var date2 = new Date();
+var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24)); 
+
+alert(diffDays )
