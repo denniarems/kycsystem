@@ -24,11 +24,11 @@ router.get("/user", (req, res, next) => {
 });
 
 /* GET user User form page. */
-router.get("/userform", (req, res, next) => {
-	res.render("userform");
+router.get("/userPageAllowEdit", (req, res, next) => {
+	res.render("userPage1");
 });
-router.get("/userPage", (req, res, next) => {
-	res.render("userPage");
+router.get("/userPageDenyEdit", (req, res, next) => {
+	res.render("userPage2");
 });
 router.get("/userform", (req, res, next) => {
 	res.render("userform");
@@ -71,13 +71,13 @@ router.get("/clientUi", (req, res, next) => {
 	res.render("clientUi", { name: "Client" });
 });
 
-router.post("/getAddressFromPrivKey", (req, res) => {
-	let PublicKey = getUserPublicKey(req.body.pKey);
+router.post("/getKeyAndAddress", (req, res) => {
+	let PublicKey = getUserPublicKey(req.body.privateKey);
 	let address = getUserAddress(PublicKey);
-	res.send({ address: address });
+	res.send({ address: address,pub_key:PublicKey });
 });
 router.post("/changePassword", async (req, res) => {
-	const privateKey = req.body.priv_key;
+	const privateKey = req.body.priv_key; 
 	const oldKey = req.body.oldKey;
 	const newKey = req.body.newKey;
 	const msg = await changeUserKey(privateKey, oldKey, newKey);

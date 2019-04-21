@@ -85,7 +85,7 @@ clientData = event => {
               $("#mobile").text(data.user[4]);
               $("#pincode").text(data.user[5]);
               $("#aadhar").text(data.user[6]);
-			  if (data.status==1) {
+			  if (data.status[0]==1) {
 				  $("#status").text("Verifed");
 				} else {
 					$("#status").text(" Not Verifed");
