@@ -72,6 +72,8 @@ router.get("/clientUi", (req, res, next) => {
 });
 
 router.post("/getKeyAndAddress", (req, res) => {
+	console.log("indesssssss");
+	
 	let PublicKey = getUserPublicKey(req.body.privateKey);
 	let address = getUserAddress(PublicKey);
 	res.send({ address: address,pub_key:PublicKey });
@@ -126,6 +128,8 @@ router.post("/decryptData", (req, res) => {
 	res.send({ user: data , status:status});
 });
 router.post("/VerifyData", (req, res) => {
+	console.log("inside verify data");
+	
 	let data = req.body.result;
 	let BufferData = Buffer.from(data, "base64").toString("ascii");
 	data = JSON.parse(BufferData);

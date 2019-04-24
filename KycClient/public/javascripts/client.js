@@ -1,9 +1,12 @@
 checkClient = pKey => {
+  console.log("inside check client");
+  
   return new Promise(function(resolve, reject) {
     $.post(
-      "/getAddressFromPrivKey",
-      { pKey },
+      "/getKeyAndAddress",
+      { privateKey:pKey },
       (data, textStatus, jqXHR) => {
+        console.log("inside get address");
         $.ajax({
           type: "GET",
           url: "/statedata?address=" + data.address,
@@ -12,11 +15,15 @@ checkClient = pKey => {
             "Content-Type": "application/json"
           },
           success: function(result) {
+            console.log(result);
+            
             $.post(
               "/VerifyData",
               { result },
               (data, textStatus, jqXHR) => {
-                resolve(data.status);
+                console.log(data);
+                
+                resolve(data.status[0]);
               },
               "json"
             ).fail(() => {
