@@ -73,7 +73,6 @@ router.get("/clientUi", (req, res, next) => {
 
 router.post("/getKeyAndAddress", (req, res) => {
 	console.log("indesssssss");
-	
 	let PublicKey = getUserPublicKey(req.body.privateKey);
 	let address = getUserAddress(PublicKey);
 	res.send({ address: address,pub_key:PublicKey });
@@ -155,5 +154,4 @@ router.get("/statedata", async (req, res, next) => {
 		res.send(error);
 	}
 });
-
 module.exports = router;
