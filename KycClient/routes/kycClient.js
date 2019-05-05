@@ -8,9 +8,8 @@ const {
 const { createTransaction } = require("./lib/processor");
 FAMILY_NAME = "Kyc Chain";
 
-USERKEY = "66ad89d0ff29b0267fba72ea8d40ef7975e10f8acde8d50d20cdf56ba9599c66";
-CLIENTKEY = "8f99bb8b1dc799fd1ed9b7e370330f9378c78f7c332ac3e2233bf559ce21ea8b";
-POLICEKEY = "4206848f09f0953370fc3e4a131faeab07e239d451190294e5049cfcf05a107e";
+// USERKEY = "f345e17713833257b6d583eaf80469e67ec00d54fb2ff15dbb85cb19cc1b0f2f";
+let POLICEKEY = ["76a658e14e08b2f20e6465c5357729a48f6709228bd072920e45e8daae5b6e60","4206848f09f0953370fc3e4a131faeab07e239d451190294e5049cfcf05a107e"]
 
 function addUserData(
   Key,
@@ -22,7 +21,8 @@ function addUserData(
   location,
   mobile,
   pincode,
-  aadhar
+  aadhar ,
+  Voter
 ) {
   let address = getUserAddress(pub_key);
   let payload = [
@@ -33,7 +33,8 @@ function addUserData(
     mobile,
     pincode,
     aadhar,
-    getUserPublicKey(Key)
+    getUserPublicKey(Key) ,
+    Voter
   ];
   payload = JSON.stringify(payload);
   //encryption
@@ -44,22 +45,41 @@ function addUserData(
 
   createTransaction(FAMILY_NAME, [address], [address], Key, appendedPayload);
 }
-function verifyUser(key, userPublicKey, action) {
+
+function verifyUser(key, userPublicKey, action)
+{
+  console.log("inisde verfiy user")
   const address = getUserAddress(userPublicKey);
   let payload = [action, userPublicKey];
   payload = JSON.stringify(payload);
-  if (key == POLICEKEY) {
-    createTransaction(FAMILY_NAME, [address], [address], key, payload);
-  } else {
-    console.log("not a police , invalid PrivateKey");
+  for(i=0 ;i<POLICEKEY.length ;i++)
+  {
+    if (key == POLICEKEY[i]) {
+      console.log("PoliceKEY matches")
+      createTransaction(FAMILY_NAME, [address], [address], key, payload);
+    } else {
+      console.log("not a police , invalid PrivateKey");
+    }
   }
+ 
 }
 
 function checkPoliceKey(key) {
-  return key === POLICEKEY ? 0 : 1;
+  console.log("K inside check",key)
+  for(i=0 ;i<POLICEKEY.length ;i++)
+  {
+    if(key == POLICEKEY[i])
+    {
+      console.log("K inside loop check",key)
+      console.log("PK inside check",POLICEKEY[i])
+      return key == POLICEKEY[i] ? 0 : 1;
+    }
+   
+  }
 }
 
 async function getUsersData() {
+  console.log("IN getUsersData")
   let UserAddress = hash(FAMILY_NAME).substr(0, 6);
   return getState(UserAddress, true);
 }
@@ -67,7 +87,7 @@ async function getData() {
   try {
     let usersList = [];
     let stateData = await getUsersData();
-    // console.log('listings', stateData)
+    console.log('listings getData ', stateData)
     stateData.data.forEach(users => {
       if (!users.data) return;
       let decodedData = Buffer.from(users.data, "base64").toString();
@@ -81,6 +101,7 @@ async function getData() {
         });
       }
     });
+    console.log('usersList getData ', usersList)
     return usersList;
   } catch (error) {
     console.log(error);
@@ -89,7 +110,8 @@ async function getData() {
 async function getUserData(UserAddress) {
   return getState(UserAddress, true);
 }
-async function changeUserKey(PrivateKey, OldKey, NewKey) {
+async function changeUserKey(PrivateKey, OldKey, NewKey) 
+{
   const userPublicKey = getUserPublicKey(PrivateKey);
   const userAddress = getUserAddress(userPublicKey);
   let stateData = await getUserData(userAddress);

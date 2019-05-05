@@ -50,13 +50,17 @@ services:
             sawtooth-rest-api -vvv
               --connect tcp://validator:4004
               --bind sawtooth-rest-api:8008
-
     settings-tp:
         image: hyperledger/sawtooth-settings-tp:1.0
         depends_on:
-            - validator
+          - validator
         command: settings-tp -vv --connect tcp://validator:4004
-
+    identity-tp:
+        image: hyperledger/sawtooth-identity-tp:1.0
+        container_name: sawtooth-identity-tp-default
+        depends_on:
+          - validator
+        entrypoint: identity-tp -vv -C tcp://validator:4004
     validator:
         container_name: validator
         image: hyperledger/sawtooth-validator:1.0

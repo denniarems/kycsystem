@@ -15,13 +15,13 @@ checkClient = pKey => {
             "Content-Type": "application/json"
           },
           success: function(result) {
-            console.log(result);
+            console.log("suc",result);
             
             $.post(
               "/VerifyData",
               { result },
               (data, textStatus, jqXHR) => {
-                console.log(data);
+                console.log("Verfy data",data);
                 
                 resolve(data.status[0]);
               },
@@ -39,6 +39,7 @@ checkClient = pKey => {
     );
   });
 };
+
 loginClient = async event => {
   event.preventDefault();
   sessionStorage.clear();
@@ -50,7 +51,7 @@ loginClient = async event => {
   } else {
     checkClient(pKey)
       .then(status => {
-        console.log(status);
+        console.log("status get from chechclie",status);
         if (status == 1) {
           window.location.href = "/ClientUi";
         } else {
@@ -92,8 +93,10 @@ clientData = event => {
               $("#mobile").text(data.user[4]);
               $("#pincode").text(data.user[5]);
               $("#aadhar").text(data.user[6]);
+              $('#voter').text(data.user[8])
 			  if (data.status[0]==1) {
-				  $("#status").text("Verifed");
+          // console.log("STATS INSDE CLIE ",data.status[0] ,data.status[1])
+				  $("#status").text("Verifed account ");
 				} else {
 					$("#status").text(" Not Verifed");
 			  }

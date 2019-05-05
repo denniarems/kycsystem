@@ -23,9 +23,10 @@ loginPolice = event => {
 // modelOpen = (event, index) => {}
 putStatus = (event, pub_key, status) => {
 	event.preventDefault()
+	console.log("Button click performed")
 	const privateKey = sessionStorage.getItem('priv_key')
 	$.post('/putStatus', { privateKey, pub_key, status }, 'json')
-	location.reload()
+	window.location.reload()
 }
 
 checkDeKey = event => {
@@ -54,6 +55,7 @@ checkDeKey = event => {
 						$('#mobile').text(data.user[4])
 						$('#pincode').text(data.user[5])
 						$('#aadhar').text(data.user[6])
+						$('#voter').text(data.user[8])
 						$('#pub_key').text(data.user[7])
 						$('#moreData').modal('show')
 						$('#ModalAccept').attr(

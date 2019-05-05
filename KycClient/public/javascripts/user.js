@@ -68,8 +68,15 @@ postUserData = event => {
   const pincode = document.getElementById('pincode').value
   const aadhar = document.getElementById('aadhar').value
   const enKey = document.getElementById('enKey').value
+  const Voter = document.getElementById('voter').value ;
   const privateKey = sessionStorage.getItem('privatekey')
   const pub_key = sessionStorage.getItem('pub_key')
+ 
+  try
+  {
+    console.log(Voter)
+    if(aadhar.length == 12 && Voter.length == 10 && pincode.length ==6)
+    {
   $.post(
     '/userData',
     {
@@ -82,12 +89,21 @@ postUserData = event => {
       mobile: mobile,
       pincode: pincode,
       aadhar: aadhar,
-      enKey: enKey
+      enKey: enKey ,
+      voter : Voter
     },
     'json'
   )
+  console.log("VALIDATIOmn")
+  alert("Data successfully send to police")
+}else{
+  alert("Please enter valid aadhar , voter id ,pincode details")
 }
-
+  }catch(err){
+    console.log("ERR IS ",err)
+  }
+ 
+}
 getUserData = event => {
   event.preventDefault()
   pub_key = sessionStorage.getItem('pub_key')
@@ -115,6 +131,7 @@ getUserData = event => {
               $('#mobile').text(data.user[4])
               $('#pincode').text(data.user[5])
               $('#aadhar').text(data.user[6])
+              $('#voter').text(data.user[8])
               console.log(data.status)
               if (data.status[0] == 1) {
                 var date2 = new Date()
@@ -138,19 +155,20 @@ getUserData = event => {
     'json'
   )
 }
-changePassword = event => {
+updateEncKey = event => {
   event.preventDefault()
   priv_key = sessionStorage.getItem('privatekey')
   oldKey = $('#oldKey').val()
   newKey = $('#newKey').val()
+  console.log("Changin key")
   $.post(
-    '/changePassword',
+    '/changeEnckey',
     { priv_key, oldKey, newKey },
     (data, textStatus, jqXHR) => {
       if (data.msg == 1) {
-        alert('Password Changed Successfully')
+        alert('Encryption key Changed Successfully')
       } else {
-        alert('Password Not Changed')
+        alert('key Not Changed')
       }
     },
     'json'
@@ -169,5 +187,7 @@ document.getElementById('name').value = 'Dennis'
 document.getElementById('email').value = 'hehe@hihi.in'
 document.getElementById('adderss').value = 'it doesnt matter'
 document.getElementById('mobile').value = 2255
-document.getElementById('pincode').value = 300303003
-document.getElementById('aadhar').value = 12345678
+document.getElementById('pincode').value = 673007
+document.getElementById('aadhar').value = 123456789012
+document.getElementById('voter').value = 1234567890
+

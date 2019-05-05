@@ -29,6 +29,7 @@ getUserPublicKey = Key => {
 }
 async function getState(address, isQuery) {
 	let stateRequest = 'http://rest-api:8008/state'
+	console.log("IN getState")
 	if (address) {
 		if (isQuery) {
 			stateRequest += '?address='
@@ -39,6 +40,7 @@ async function getState(address, isQuery) {
 	}
 	let stateResponse = await fetch(stateRequest)
 	let stateJSON = await stateResponse.json()
+	console.log("IN stateJSON",stateJSON)
 	return stateJSON
 }
 encrypt = (data, enKey) => {

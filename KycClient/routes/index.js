@@ -44,6 +44,7 @@ router.post("/userData", (req, res, next) => {
 		const mobile = req.body.mobile;
 		const pincode = req.body.pincode;
 		const aadhar = req.body.aadhar;
+		const Voter = req.body.voter ;
 		const enKey = req.body.enKey;
 		console.log("Data sent to REST API");
 		addUserData(
@@ -57,6 +58,7 @@ router.post("/userData", (req, res, next) => {
 			mobile,
 			pincode,
 			aadhar,
+			Voter
 		);
 		res.send({ message: "Data successfully added" });
 	} catch (error) {
@@ -67,7 +69,7 @@ router.post("/userData", (req, res, next) => {
 router.get("/client", (req, res, next) => {
 	res.render("client", { name: "Client" });
 });
-router.get("/clientUi", (req, res, next) => {
+router.get("/ClientUi", (req, res, next) => {
 	res.render("clientUi", { name: "Client" });
 });
 
@@ -77,7 +79,7 @@ router.post("/getKeyAndAddress", (req, res) => {
 	let address = getUserAddress(PublicKey);
 	res.send({ address: address,pub_key:PublicKey });
 });
-router.post("/changePassword", async (req, res) => {
+router.post("/changeEnckey", async (req, res) => {
 	const privateKey = req.body.priv_key; 
 	const oldKey = req.body.oldKey;
 	const newKey = req.body.newKey;
@@ -94,47 +96,53 @@ router.get("/police", (req, res, next) => {
 	res.render("police", { name: "Police" });
 });
 router.get("/policeUi", async (req, res) => {
+	console.log("P UI")
 	let usersList = await getData();
 	let users = [];
 	for (let index = 0; index < usersList.length; index++) {
 		const user = usersList[index];
 		users.push(user);
 	}
+	console.log("INSIDE POLICE UI ",users)
 	res.render("policeUi", { listings: users });
 });
 router.post("/checkPoliceKey", (req, res) => {
-	key = req.body.privateKey;
-	status = checkPoliceKey(key);
+	let key = req.body.privateKey;
+	let status = checkPoliceKey(key);
+	console.log("STATUS IS ",status+"key",key)
 	res.send({ status: status });
 });
 router.post("/putStatus", (req, res) => {
+	console.log("in putstats police")
 	const uPub_key = req.body.pub_key;
 	const status = req.body.status;
 	const privateKey = req.body.privateKey;
 	verifyUser(privateKey, uPub_key, status);
 });
 router.post("/decryptData", (req, res) => {
-	let data = req.body.result;
+	let dataToDecrypt = req.body.result;
 	const deKey = req.body.deKey;
-	let BufferData = Buffer.from(data, "base64").toString("ascii");
-	console.log("Buffer Data",JSON.parse(BufferData)[0]);
-	let status= JSON.parse(BufferData)[1]
-	console.log("Status   ",status);
-	console.log("Key",deKey);
-	data = decrypt(JSON.parse(BufferData)[0], deKey);
-	console.log("decrypted Data",data);
-	data = JSON.parse(data);
-	res.send({ user: data , status:status});
+	let BufferData = Buffer.from(dataToDecrypt, "base64").toString("ascii");
+	console.log("Buffer Data data to decrypt is ",JSON.parse(BufferData)[0]);
+	let extraPayload= JSON.parse(BufferData)[1]
+	console.log("extraPayload  is ",extraPayload);
+	console.log("dec Key",deKey);
+	let decryptedData = decrypt(JSON.parse(BufferData)[0], deKey);
+	console.log("decrypted Data",decryptedData);
+	decryptedData = JSON.parse(decryptedData);
+	res.send({ user: decryptedData , status:extraPayload});
 });
+
 router.post("/VerifyData", (req, res) => {
 	console.log("inside verify data");
-	
 	let data = req.body.result;
 	let BufferData = Buffer.from(data, "base64").toString("ascii");
 	data = JSON.parse(BufferData);
 	data = data[1];
+	console.log("DAATA{1] inside verify ",data[1])
 	res.send({ status: data });
 });
+
 router.post("/getKey", (req, res, next) => {
 	key = req.body.privateKey;
 	key = getUserPublicKey(key);

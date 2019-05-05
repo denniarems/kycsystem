@@ -4,8 +4,9 @@
     <h2>{{name}}</h2>
     <div class="jumbotron">
         <button class="btn btn-primary" id="viewData" data-toggle="modal" data-target="#decryptKey">View Data</button>
-        <button class="btn btn-primary" id="change" data-toggle="modal" data-target="#changeKey">ChangePassword</button>
-        <a class="btn btn-primary" disabled id="s"></a>
+        <button class="btn btn-primary" id="change" data-toggle="modal" data-target="#changeKey">Change
+            Enc key</button>
+        <a class="btn btn-primary" href="/userform">Add or Edit Data </a>
         </form>
     </div>
 
@@ -15,7 +16,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Change Password</h5>
+                    <h5 class="modal-title">Change Encryption Key</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -23,10 +24,10 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <br>
-                        Old Password : <input type="password" id="oldKey"><br>
-                        New Password : <input type="password" id="newKey"><br>
-                        <button id="decrypt" data-dismiss="modal" data-toggle="modal" onclick="changePassword(event)"
-                            class="btn-danger">Change Password</button>
+                        Old Encryption Key : <input type="password" id="oldKey"><br>
+                        New Encryption Key: <input type="password" id="newKey"><br>
+                        <button id="decrypt" data-dismiss="modal" data-toggle="modal" onclick="updateEncKey(event)"
+                            class="btn-danger">Change Enc key</button>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -69,15 +70,41 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        Name : <p id="name"></p>
+                         <div style="display:flex; flex-direction: row; align-items: center">
+                        <label> Name : </label> <h6 id="name"></h6>
+                        </div>
+                        <div  style="display:flex; flex-direction: row; align-items: center">
+                        <label> Email : </label>  <h6 id="email"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                        <label> Date of Birth : </label>  <h6 id="dob"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                        <label> Address : </label>  <h6 id="address"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                        <label> Mobile : </label>  <h6 id="mobile"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                        <label > Pincode : </label>  <h6 id="pincode"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                        <label> Aadhar : </label>  <h6 id="aadhar"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                        <label> Voter : </label>  <h6 id="voter"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                        <label > Public Key : </label>  <h6 id="pub_key"></h6>
+                        </div>
+                        {{!-- Name : <p id="name"></p>
                         Email : <p id="email"></p>
                         Date of Birth : <p id="dob"></p>
                         Address : <p id="address"></p>
                         Mobile : <p id="mobile"></p>
                         Pincode : <p id="pincode"></p>
                         Aadhar Id : <p id="aadhar"></p>
-                        Status : <p id="status"></p>
-                        Public Key : <p id="pub_key"></p>
+                        Public Key : <p id="pub_key"></p> --}}
                     </div>
                 </div>
                 <div class="modal-footer">
