@@ -29,6 +29,9 @@ changeEnckey = (context, userPublicKey, Payload) => {
   let user_Address = tp.getUserAddress(userPublicKey)
   // console.log("PYLOD RECICE ENC ",Payload)
   let user_detail = Payload
+  context.addEvent('Kyc Chain/Passwordchanged', [
+    ['Passwordchanged ', user_detail]
+  ])
   return tp.writeToState(context, user_Address, user_detail)
 }
 function verifyUser  (context, action, userPublicKey)  {
