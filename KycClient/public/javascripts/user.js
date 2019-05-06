@@ -45,7 +45,7 @@ loginUser = event => {
             if (5 <= minute) {
               window.location.href = '/userPageAllowEdit'
             } else {
-              $('#s').text('You Need ' + (5-minute) + '  minutes to Edit Data')// not working 
+              // $('#s').text('You Need ' + (5-minute) + '  minutes to Edit Data')// not working 
               window.location.href = '/userPageDenyEdit'
             }
           })
@@ -71,7 +71,6 @@ postUserData = event => {
   const Voter = document.getElementById('voter').value ;
   const privateKey = sessionStorage.getItem('privatekey')
   const pub_key = sessionStorage.getItem('pub_key')
- 
   try
   {
     console.log(Voter)

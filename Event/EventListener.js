@@ -32,9 +32,6 @@ function getEventsMessage(message){
                 else if(event.eventType == 'Kyc Chain/Policeverified'){
                         console.log(" VERIFIED EVENT OCCURS ",event)
                 }
-                else if(event.eventType == 'Kyc Chain/Passwordchanged'){
-                        console.log(" Password Change EVENT OCCURS ",event)
-                }
         })
 }
 
@@ -45,10 +42,6 @@ function EventSubscribe(Url){
         const verifiedSubs = EventSubscription.create({
                 eventType : 'Kyc Chain/Policeverified' 
         })
-        const passwordSubs = EventSubscription.create({
-                eventType : 'Kyc Chain/Passwordchanged' 
-        })
-
         const rejectionSubs = EventSubscription.create({
                 eventType :'Kyc Chain/PoliceReject'
         })

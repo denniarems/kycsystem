@@ -4,9 +4,8 @@
     <h2>{{name}}</h2>
     <div class="jumbotron">
         <button class="btn btn-primary" id="viewData" data-toggle="modal" data-target="#decryptKey">View Data</button>
-        <button class="btn btn-primary" id="change" data-toggle="modal" data-target="#changeKey">Change
-            Enc key</button>
-        <a class="btn btn-primary" href="/userform">Add or Edit Data </a>
+        <button class="btn btn-primary" id="change" data-toggle="modal" data-target="#changeKey">Change Enc key</button>
+        <button class="btn btn-primary disabled">Add or Edit Data </button>
         </form>
     </div>
 
@@ -70,32 +69,45 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                         <div style="display:flex; flex-direction: row; align-items: center">
-                        <label> Name : </label> <h6 id="name"></h6>
-                        </div>
-                        <div  style="display:flex; flex-direction: row; align-items: center">
-                        <label> Email : </label>  <h6 id="email"></h6>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                            <label> Name : </label>
+                            <h6 id="name"></h6>
                         </div>
                         <div style="display:flex; flex-direction: row; align-items: center">
-                        <label> Date of Birth : </label>  <h6 id="dob"></h6>
+                            <label> Email : </label>
+                            <h6 id="email"></h6>
                         </div>
                         <div style="display:flex; flex-direction: row; align-items: center">
-                        <label> Address : </label>  <h6 id="address"></h6>
+                            <label> Date of Birth : </label>
+                            <h6 id="dob"></h6>
                         </div>
                         <div style="display:flex; flex-direction: row; align-items: center">
-                        <label> Mobile : </label>  <h6 id="mobile"></h6>
+                            <label> Address : </label>
+                            <h6 id="address"></h6>
                         </div>
                         <div style="display:flex; flex-direction: row; align-items: center">
-                        <label > Pincode : </label>  <h6 id="pincode"></h6>
+                            <label> Mobile : </label>
+                            <h6 id="mobile"></h6>
                         </div>
                         <div style="display:flex; flex-direction: row; align-items: center">
-                        <label> Aadhar : </label>  <h6 id="aadhar"></h6>
+                            <label> Pincode : </label>
+                            <h6 id="pincode"></h6>
                         </div>
                         <div style="display:flex; flex-direction: row; align-items: center">
-                        <label> Voter : </label>  <h6 id="voter"></h6>
+                            <label> Aadhar : </label>
+                            <h6 id="aadhar"></h6>
                         </div>
                         <div style="display:flex; flex-direction: row; align-items: center">
-                        <label > Public Key : </label>  <h6 id="pub_key"></h6>
+                            <label> Voter : </label>
+                            <h6 id="voter"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                            <label> Status : </label>
+                            <h6 id="status"></h6>
+                        </div>
+                        <div style="display:flex; flex-direction: row; align-items: center">
+                            <label> Public Key : </label>
+                            <h6 id="pub_key"></h6>
                         </div>
                         {{!-- Name : <p id="name"></p>
                         Email : <p id="email"></p>
@@ -109,5 +121,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div> </div> </div> </div>
-                    <script src="/javascripts/user.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/javascripts/user.js"></script>
