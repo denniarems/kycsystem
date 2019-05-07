@@ -12,21 +12,22 @@
 
 ### INSTRUCTIONS FOR SETTING-UP  APPLICATION Requirements:
     OS: Ubuntu 18.04 (Recommented)
-    * NodeJs version 8.0 stable npm latest
-    * Docker
+    • NodeJs version 8.0 stable npm latest
+    • Docker
 
-### Steps:
-
+> ### Steps:
+    1.Navigate into main directory
+    2.Run "sudo docker-compose up"
+    3.Open Browser & navigate [LocalHost](http://localhost:3000) or [Ip Address](http://127.0.0.1:3000) 
 
 > There are Three clients in this application
 
-    * User
-    * Police
-    * Client
-      
-      Navigate into each clients directories and do the command 'npm install' to add the modules needed to run the program.The application is run using yaml file inside the folder using “sudo docker -compose -f docker-compose.yaml up ” or simply “sudo docker-compose up ” The application should be available at port http://localhost:3001.
-      
-    • Log into USER page using private key (given inside examples.txt)
+    • User
+       hiii
+    • Police
+    • Client
+
+    • Log into USER page using private key (given inside examples.yaml)
     • Submit form by entering details of user
     • Log into POLICE page using private key (given inside examples.yaml)
     • Can view the data from user , then decrypt using decrypt key to view full details
