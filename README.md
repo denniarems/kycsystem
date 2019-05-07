@@ -11,14 +11,14 @@
 
 
 ### INSTRUCTIONS FOR SETTING-UP  APPLICATION Requirements:
-    -[X] OS: Ubuntu 18.04 (Recommented)
-    -[X] NodeJs version 8.0 stable npm latest
-    -[X] Docker
+-[X] OS: Ubuntu 18.04 (Recommented)
+-[X] NodeJs version 8.0 stable npm latest
+-[X] Docker
 
 ### Steps:
-    1.Clone & Navigate into main directory
-    2.Run "sudo docker-compose up"
-    3.Open Browser & navigate LocalHost- http://localhost:3000 or Ip Address- http://127.0.0.1:3000
+1.Clone & Navigate into main directory
+2.Run "sudo docker-compose up"
+3.Open Browser & navigate LocalHost- http://localhost:3000 or Ip Address- http://127.0.0.1:3000
 
 > There are three clients in this application
 
