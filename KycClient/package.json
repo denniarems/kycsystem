@@ -3,7 +3,6 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"test": "nodemon ./bin/www --watch",
 		"start": "node ./bin/www"
 	},
 	"dependencies": {
@@ -16,8 +15,5 @@
 		"node-fetch": "^2.3.0",
 		"sawtooth-sdk": "^1.0.5",
 		"text-encoding": "^0.7.0"
-	},
-	"devDependencies": {
-		"nodemon": "^1.18.10"
 	}
 }

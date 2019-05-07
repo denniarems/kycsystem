@@ -63,3 +63,5 @@ typings/
 #trash files
 
 trash.*
+Docs/.~lock.DOCUMENTATION.odt#
+Docs/.~lock.README.odt#
