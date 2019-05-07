@@ -1,5 +1,5 @@
 # D.I SYSTEM
-
+> Decentralised Identity Verification Platform By Police
 ### Description
 
 > We use hyperledger sawtooth for building this project . its a identity system which uses decentralised mechanism . Its similar to the working or how we use aadhar in public scenerios . its mainly focus on the security of every persons personal details which cannot access by others without their permission . Only person who was accepeted by police can get their verified public key .
@@ -11,27 +11,35 @@
 
 
 ### INSTRUCTIONS FOR SETTING-UP  APPLICATION Requirements:
-    OS: Ubuntu 18.04 (Recommented)
-    • NodeJs version 8.0 stable npm latest
-    • Docker
+    -[X] OS: Ubuntu 18.04 (Recommented)
+    -[X] NodeJs version 8.0 stable npm latest
+    -[X] Docker
 
-> ### Steps:
-    1.Navigate into main directory
+### Steps:
+    1.Clone & Navigate into main directory
     2.Run "sudo docker-compose up"
-    3.Open Browser & navigate [LocalHost](http://localhost:3000) or [Ip Address](http://127.0.0.1:3000) 
+    3.Open Browser & navigate LocalHost- http://localhost:3000 or Ip Address- http://127.0.0.1:3000
 
-> There are Three clients in this application
+> There are three clients in this application
 
     • User
-       hiii
+       1. View Data
+       2. Change Enc Key 
+       3. Add Or Edit Data
     • Police
+       1. View Unveried Users
+       2. Approve them By giving a Verify Tag
+       3. Delete the from chain by Reject Them
     • Client
+       1. Only A verifed User can Login
+       2. Check User by their Public Key
 
-    • Log into USER page using private key (given inside examples.yaml)
+
+    <!-- • Log into USER page using private key (given inside examples.yaml)
     • Submit form by entering details of user
     • Log into POLICE page using private key (given inside examples.yaml)
     • Can view the data from user , then decrypt using decrypt key to view full details
     • Police can accept or reject user details
     • If accepted , user can login to CLIENT login page using the user private key
     • Inside ,provide public key get from police and decrypt key inorder to display the 	status 
-    • Inside user login , user can view data and change encryption key
+    • Inside user login , user can view data and change encryption key -->
