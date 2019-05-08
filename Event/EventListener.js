@@ -46,7 +46,7 @@ function EventSubscribe(Url){
                 eventType :'Kyc Chain/PoliceReject'
         })
         const subsc_request = ClientEventsSubscribeRequest.encode({
-                subscriptions : [  passwordSubs,verifiedSubs,rejectionSubs]
+                subscriptions : [ verifiedSubs,rejectionSubs]
         }).finish()
         
         myStream.connect(()=>{

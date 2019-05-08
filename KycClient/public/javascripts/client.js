@@ -16,7 +16,6 @@ checkClient = pKey => {
           },
           success: function(result) {
             console.log("suc",result);
-            
             $.post(
               "/VerifyData",
               { result },

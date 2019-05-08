@@ -54,8 +54,9 @@ function verifyUser(key, userPublicKey, action) {
   payload = JSON.stringify(payload)
   if (POLICEKEY.indexOf(key) >= 0) {
     createTransaction(FAMILY_NAME, [address], [address], key, payload)
+    return 1
   } else {
-    console.log('not a police , invalid PrivateKey')
+    return 0
   }
 }
 

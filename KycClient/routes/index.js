@@ -117,7 +117,8 @@ router.post("/putStatus", (req, res) => {
 	const uPub_key = req.body.pub_key;
 	const status = req.body.status;
 	const privateKey = req.body.privateKey;
-	verifyUser(privateKey, uPub_key, status);
+	const alert= verifyUser(privateKey, uPub_key, status);
+	res.send({alert:alert})
 });
 router.post("/decryptData", (req, res) => {
 	let dataToDecrypt = req.body.result;

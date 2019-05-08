@@ -24,9 +24,25 @@ loginPolice = event => {
 putStatus = (event, pub_key, status) => {
 	event.preventDefault()
 	console.log("Button click performed")
-	const privateKey = sessionStorage.getItem('priv_key')
-	$.post('/putStatus', { privateKey, pub_key, status }, 'json')
-	window.location.reload()
+	var CONFIRM = prompt("Please Confirm By Entering 'CONFIRM'", "");
+	if (CONFIRM == "CONFIRM") {
+		const privateKey = sessionStorage.getItem('priv_key')
+		$.post('/putStatus', { privateKey, pub_key, status }, (data, textStatus, jqXHR) => {
+			if (data.alert==1) {
+				alert("User Verifed")
+				window.location.reload()
+			}
+			else {
+				alert("Not Autorised ")
+			}
+		},'json')
+	} else {
+		alert("Try Again")
+		window.location.reload()
+
+	}
+	
+	
 }
 
 checkDeKey = event => {

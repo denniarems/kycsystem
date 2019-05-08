@@ -19,15 +19,12 @@ var decoder = new TextDecoder('utf8')
 addUserData = (context, userPublicKey, Payload) => {
   let user_Address = tp.getUserAddress(userPublicKey)
   let user_detail = Payload
-  // let receipt =  user_detail[1][0]
-  // console.log("rece",receipt)
   context.addReceiptData(Buffer.from('change in state is'+ user_detail,'utf8'))
   return tp.writeToState(context, user_Address, user_detail)
 }
 
-changeEnckey = (context, userPublicKey, Payload) => {
+changeEncKey = (context, userPublicKey, Payload) => {
   let user_Address = tp.getUserAddress(userPublicKey)
-  // console.log("PYLOD RECICE ENC ",Payload)
   let user_detail = Payload
   return tp.writeToState(context, user_Address, user_detail)
 }
@@ -46,19 +43,15 @@ function verifyUser  (context, action, userPublicKey)  {
     {
       try{
         let stateData = decoder.decode(data[address])
-        // console.log('data[address]', data[address])
-        // console.log('data', data)
         console.log('stateData decode is ', stateData)
         let Payload = JSON.parse(stateData)
         console.log('parse Payload', Payload)
         let D = new Date()
         let date = Date.parse(D)
         action = [action, date]
-        // console.log("ACTION INSIDE ACCEPT",action)
         let newData = [Payload[0], action]
         console.log('newData is ', newData)
         context.addEvent('Kyc Chain/Policeverified', [['policeverified', address]])
-        // context.addReceiptData(Buffer.from("Verified",newData,'utf8'));
         return tp.writeToState(context, address, newData)
        
       }catch(err){
@@ -91,16 +84,13 @@ class KnowYourCustomer extends TransactionHandler {
         return addUserData(context, userPublicKey, Payload[1])
         break
       case 0:
-      // console.log("case verfiy ",Payload[0]+"&"+Payload[1])
         return verifyUser(context, Payload[0], Payload[1])
         break ;
       case 1:
-        // console.log("case verfiy ",Payload[0],"&",Payload[1])
         return verifyUser(context, Payload[0], Payload[1])
         break;
       case 2:
-        // console.log("ENC PAY IS ",Payload[1])
-        return changeEnckey(context, userPublicKey, Payload[1])
+        return changeEncKey(context, userPublicKey, Payload[1])
         break;
       default:
         throw new InternalError(' Error! in TP')
