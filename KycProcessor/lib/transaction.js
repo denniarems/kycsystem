@@ -9,8 +9,6 @@ const { createContext, CryptoFactory } = require('sawtooth-sdk/signing')
 
 var encoder = new TextEncoder('utf8')
 
-//USERKEY private key
-USERKEY = '8f99bb8b1dc799fd1ed9b7e370330f9378c78f7c332ac3e2233bf559ce21ea8b'
 NAMESPACE = 'Kyc Chain'
 class tpFun {
 	// function to hash data
@@ -20,13 +18,6 @@ class tpFun {
 			.update(data)
 			.digest('hex')
 	}
-
-	/* function to write data to state 
-    parameter : 
-    context -  validator context object
-    address - address to which data should be written to
-    data - the data tto be written
-    */
 	writeToState(context, address, data) {
 		this.dataBytes = encoder.encode(JSON.stringify(data))
 		let entries = {
@@ -37,7 +28,6 @@ class tpFun {
 	deleteFromState(context, address) {
 		return context.deleteState([address])
 	}
-
 	/* function to retrive the address of a particular vehicle based on its vin number */
 	getUserAddress(pKey) {
 		let keyHash = this.hash(pKey)
