@@ -52,7 +52,8 @@ function verifyUser(key, userPublicKey, action) {
   const address = getUserAddress(userPublicKey)
   let payload = [action, userPublicKey]
   payload = JSON.stringify(payload)
-  if (POLICEKEY.indexOf(key) >= 0) {
+
+  if (POLICEKEY.indexOf(getUserPublicKey(key)) >= 0) {
     createTransaction(FAMILY_NAME, [address], [address], key, payload)
     return 1
   } else {
@@ -61,7 +62,7 @@ function verifyUser(key, userPublicKey, action) {
 }
 
 function checkPoliceKey(key) {
-  if (POLICEKEY.indexOf(key) >= 0) {
+  if (POLICEKEY.indexOf(getUserPublicKey(key)) >= 0) {
     return 0
   }
 }
