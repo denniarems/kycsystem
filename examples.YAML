@@ -1,28 +1,40 @@
-User:
+User: //Demo
 
-1:
+1: //Give Enc as '1',And Varify Approve
+  Private Key :
 23aaf6008d04b00e691f659f8f5994be9aa1240918f299967a5d3f48371608fd
+  Public Key:
 02113d8f43bccc52a85ca2c7a433d7c04cd5961b1404bc26407c44a1bd5a2467d9
-2:
+2: //Give Enc as '2',And Varify Approve
+  Private Key :
 7dcd440007b9906eef9b6077730871f1edb4c7d9118deb7be04536e3625629c2
+  Public Key:
 03220a0384f5ba8994a1827a59dc282f6c54767cfee5eddd1a113963865979bd98
-3:
+3: //Give Enc as '3',And Varify Reject
+  Private Key :
 68e7230dad43d712485651d613d50a9a2115077234009d54c2d245fda951c241
+  Public Key:
 02b979eee2ff1980ac27a57d2e8c5bbb670b6273ae10b0fc9e5ef3d1927db2cb0d
-4:
+4: //Give Enc as '4',And Don't Varify 
+  Private Key :
 5acc44f3537ca0409616f2134a95283529326e6fe8d3fbd00f9f751ee513afbb
+  Public Key:
 02db033c47f2f1c04fe63bef4fbb4b33316da91457024ffaed5aef42c275f3ecfa
+
+
 5:
+  Private Key :
 2c2acf7b678428ea11ae4d46d61b6ab3b27a7b268d97cecb3830bee33fddedf0
+  Public Key:
+03107071c3ef01a9f9ba3e451a40a266c137773aa31da26deb80ad33f1f9fcffd7
 
 
-Police:
-
+Police: // Can use any Private Keys
 1:
-  
-
-
-2:
+  Private Key :
+  1b2f37ebe88b6e5587b04cc59b06cab703e083b2929d99381011436cae0eedbd
+1:
+  Private Key :
   76a658e14e08b2f20e6465c5357729a48f6709228bd072920e45e8daae5b6e60
 
 
