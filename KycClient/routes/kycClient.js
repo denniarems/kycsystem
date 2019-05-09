@@ -9,8 +9,7 @@ const { createTransaction } = require('./lib/processor')
 FAMILY_NAME = 'Kyc Chain'
 
 let POLICEKEY = [
-  '027f3250f50c1257f0314d4d3b7f21af937c4d8b2c1e020f4d2692d0b6c0562f2d',
-  '03ce24d7bdb7f31e5c1233affd0faef5e6f62c968b6e1465122bc1ed939b466028'
+  '027f3250f50c1257f0314d4d3b7f21af937c4d8b2c1e020f4d2692d0b6c0562f2d'
 ]
 
 function addUserData(
