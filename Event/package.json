@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node EventListener.js"
+    "start": "node EventListener.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -16,6 +18,8 @@
     "node-fetch": "^2.3.0",
     "sawtooth-sdk": "^1.0.5",
     "text-encoder": "0.0.4",
-    "text-encoding": "^0.7.0"
-  }
+    "text-encoding": "^0.7.0",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
