@@ -10,7 +10,7 @@
 		"crypto": "^1.0.1",
 		"protobufjs": "^6.7.3",
 		"sawtooth-sdk": "^1.0.2",
-		"secp256k1": "^3.2.5",
+		"secp256k1": "^4.0.3",
 		"text-encoding": "^0.6.4",
 		"uuid": "^3.0.1"
 	},
